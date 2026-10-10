@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>إصدار أكواد الفلكي Pro</title>
+<style>body{font:15px/1.6 system-ui,Tahoma,sans-serif;margin:0;padding:14px;background:#0b1240;color:#e8ecff}h1{font-size:20px}h2{font-size:16px;margin:0 0 8px;color:#e3b25b}section{background:#141c5a;border-radius:14px;padding:12px;margin:12px 0}label{display:block;margin:8px 0 4px;color:#b9c2ff;font-size:13px}input,textarea{width:100%;box-sizing:border-box;padding:9px;border-radius:10px;border:1px solid #3a4590;background:#0b1240;color:#fff;font:inherit;direction:ltr}textarea{min-height:70px}button{margin:6px 4px 0 0;padding:9px 14px;border-radius:10px;border:0;background:#e3b25b;color:#0b1240;font:inherit;font-weight:600}.warn{color:#ffb3b3;font-size:13px}.ok{color:#9be29b}.er{color:#ffb3b3}pre{white-space:pre-wrap;direction:ltr;font-size:12px;margin:0}</style></head>
+<body><h1>🔑 إصدار أكواد Premium</h1>
+<p class="warn">هذه الصفحة لا تحتوي أي سرّ. المفتاح الخاص يبقى على هاتفك فقط ولا يُرسل إلى أي مكان. من يملكه يستطيع إصدار أكواد، فاحفظه سرًّا وانسخه احتياطيًّا.</p>
+<section><h2>1) مفتاح البائع</h2><button id="gen">إنشاء مفتاح جديد (مرة واحدة فقط)</button>
+<label>المفتاح الخاص — احفظه في مكان آمن</label><textarea id="priv"></textarea>
+<label><input type="checkbox" id="rem" style="width:auto"> تذكّر المفتاح على هذا الهاتف</label>
+<label>المفتاح العام — ضعه في ملف licpub.txt</label><textarea id="pub" readonly></textarea><button id="cpub">نسخ المفتاح العام</button></section>
+<section><h2>2) إصدار كود لمشترٍ</h2>
+<label>اسم المشتري أو مرجع (حتى 12 بايت)</label><input id="lab" maxlength="24" style="direction:rtl">
+<label>مدة الصلاحية بالأيام (0 = دائم)</label><input id="days" type="number" value="0" min="0">
+<button id="mk">توليد الكود</button>
+<label>رابط التفعيل — أرسله للمشتري</label><textarea id="lnk" readonly></textarea><button id="clnk">نسخ الرابط</button><button id="wa">إرسال عبر واتساب</button>
+<label>الكود وحده</label><textarea id="cod" readonly></textarea><div id="msg"></div></section>
+<section><h2>3) فحص كود</h2><textarea id="chk" placeholder="الصق الكود أو الرابط"></textarea><button id="vf">فحص</button><div id="vr"></div></section>
+<section><h2>4) سجل الأكواد المُصدَرة على هذا الهاتف</h2><pre id="log"></pre></section>
+<script>
+const $=q=>document.querySelector(q),te=new TextEncoder(),D0=Date.UTC(2026,0,1)/864e5,A={name:'ECDSA',namedCurve:'P-256'},S={name:'ECDSA',hash:'SHA-256'};
+const b64u=u=>{let s='';for(const c of u)s+=String.fromCharCode(c);return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')};
+const b64d=s=>{s=String(s).replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';const b=atob(s),o=new Uint8Array(b.length);for(let i=0;i<b.length;i++)o[i]=b.charCodeAt(i);return o};
+const pubFromJwk=j=>{const x=b64d(j.x),y=b64d(j.y),o=new Uint8Array(65);o[0]=4;o.set(x,1);o.set(y,33);return b64u(o)};
+const say=(id,t,c)=>{$(id).textContent=t;$(id).className=c||''};
+function readJwk(){try{const j=JSON.parse($('#priv').value);if(!j.d||!j.x||!j.y)throw 0;return j}catch(e){throw new Error('المفتاح الخاص غير صالح')}}
+function save(){try{if($('#rem').checked)localStorage.setItem('adminPriv',$('#priv').value);else localStorage.removeItem('adminPriv')}catch(e){}}
+function logs(){try{return JSON.parse(localStorage.getItem('adminLog')||'[]')}catch(e){return[]}}
+function showLog(){$('#log').textContent=logs().map(x=>x.id+' | '+x.label+' | '+(x.days?x.days+' يوم':'دائم')+' | '+x.date).join('\n')||'—'}
+async function gen(){const k=await crypto.subtle.generateKey(A,true,['sign','verify']),j=await crypto.subtle.exportKey('jwk',k.privateKey);$('#priv').value=JSON.stringify(j);$('#pub').value=pubFromJwk(j);save()}
+async function makeCode(jwk,label,days){const key=await crypto.subtle.importKey('jwk',jwk,A,false,['sign']);let lab=String(label||'').trim();while(te.encode(lab).length>12)lab=lab.slice(0,-1);
+const lb=te.encode(lab),id=crypto.getRandomValues(new Uint32Array(1))[0],p=new Uint8Array(9+lb.length),dv=new DataView(p.buffer);
+p[0]=1;dv.setUint32(1,id);p[5]=1;dv.setUint16(6,days>0?Math.min(65535,Math.floor(Date.now()/864e5-D0)+Math.floor(days)):0);p[8]=lb.length;p.set(lb,9);
+const sg=new Uint8Array(await crypto.subtle.sign(S,key,p)),all=new Uint8Array(p.length+64);all.set(p);all.set(sg,p.length);return{code:b64u(all),id,label:lab}}
+async function checkCode(pubB64,input){let c=String(input||'').replace(/\s+/g,'');if(c.indexOf('#k=')>=0)c=c.split('#k=')[1];const b=b64d(c);if(b.length<73||b[0]!=1)throw new Error('تنسيق غير صحيح');
+const pk=await crypto.subtle.importKey('raw',b64d(pubB64),A,false,['verify']),p=b.slice(0,b.length-64),sg=b.slice(b.length-64);if(!await crypto.subtle.verify(S,pk,sg,p))throw new Error('التوقيع غير صحيح (مفتاح آخر أو كود معدّل)');
+const dv=new DataView(p.buffer,p.byteOffset,p.byteLength),ex=dv.getUint16(6);return{id:dv.getUint32(1),label:new TextDecoder().decode(p.slice(9,9+p[8])),exp:ex?new Date((D0+ex)*864e5).toISOString().slice(0,10):'دائم'}}
+$('#gen').onclick=async()=>{if($('#priv').value&&!confirm('يوجد مفتاح خاص الآن. إنشاء مفتاح جديد سيُبطل كل الأكواد السابقة. متابعة؟'))return;await gen()};
+$('#priv').oninput=()=>{try{$('#pub').value=pubFromJwk(readJwk())}catch(e){}save()};
+$('#rem').onchange=save;
+$('#cpub').onclick=()=>navigator.clipboard&&navigator.clipboard.writeText($('#pub').value);
+$('#mk').onclick=async()=>{try{const r=await makeCode(readJwk(),$('#lab').value,+$('#days').value||0),link=location.href.replace(/[#?].*$/,'').replace(/[^/]*$/,'')+'#k='+r.code;
+$('#cod').value=r.code;$('#lnk').value=link;const L=logs();L.unshift({id:r.id,label:r.label,days:+$('#days').value||0,date:new Date().toISOString().slice(0,10)});localStorage.setItem('adminLog',JSON.stringify(L.slice(0,500)));showLog();say('#msg','✓ تم إصدار الكود للمشتري: '+r.label,'ok')}catch(e){say('#msg',e.message||'تعذّر الإصدار','er')}};
+$('#clnk').onclick=()=>navigator.clipboard&&navigator.clipboard.writeText($('#lnk').value);
+$('#wa').onclick=()=>open('https://wa.me/?text='+encodeURIComponent('تفعيل الفلكي Premium:\nافتح الرابط التالي على هاتفك وسيتفعّل التطبيق تلقائيًا:\n'+$('#lnk').value));
+$('#vf').onclick=async()=>{try{const r=await checkCode($('#pub').value||pubFromJwk(readJwk()),$('#chk').value);say('#vr','✓ كود صحيح — المشتري: '+r.label+' — الرقم: '+r.id+' — الصلاحية: '+r.exp,'ok')}catch(e){say('#vr',e.message||'كود غير صحيح','er')}};
+try{const p=localStorage.getItem('adminPriv');if(p){$('#priv').value=p;$('#rem').checked=true;$('#pub').value=pubFromJwk(JSON.parse(p))}}catch(e){}
+showLog();
+</script></body></html>

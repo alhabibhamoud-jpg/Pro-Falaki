@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>الفلكي Pro</title>
+<meta name="theme-color" content="#0b1240">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--bg:#e9edf6;--c:#fff;--t:#16203a;--m:#5b6785;--a:#2f3fa0;--b:#d3daea;--h:#f1f4fb;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#060a18;--c:#0e1531;--t:#e6eaf7;--m:#8d9bc4;--a:#e3b25b;--b:#1f2a55;--h:#131c40}}
+:root[data-theme=dark]{--bg:#060a18;--c:#0e1531;--t:#e6eaf7;--m:#8d9bc4;--a:#e3b25b;--b:#1f2a55;--h:#131c40}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--t);font:15px/1.5 "Noto Kufi Arabic","Noto Sans Arabic",system-ui,Tahoma,sans-serif;padding-bottom:78px}
+button{font:inherit;cursor:pointer}
+.hd{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:linear-gradient(160deg,#0b1240,#2a1a5e);color:#fff}
+.hd h1{margin:0;font-size:21px}.hd small{opacity:.75}
+#dgt{border:1px solid #fff6;background:#fff1;color:#fff;border-radius:20px;padding:4px 14px}
+main{max-width:640px;margin:auto;padding:12px}
+section{display:none}section.on{display:block}
+.w{background:var(--c);border:1px solid var(--b);border-radius:16px;margin-bottom:12px;overflow:hidden}
+.w h3{margin:0;padding:9px 14px;background:var(--h);font-size:14px;color:var(--a);border-inline-start:4px solid var(--a)}
+.r{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:7px 14px;border-top:1px solid var(--b)}
+.r b{font-weight:400;color:var(--m);font-size:14px}
+.r span{direction:ltr;unicode-bidi:isolate;text-align:left;font-variant-numeric:tabular-nums}
+[dir=rtl] .r span.rt{direction:rtl}
+.nx{background:var(--h)}.nx b{color:var(--a);font-weight:700}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;overflow-x:auto;background:var(--c);border-top:1px solid var(--b);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav button{flex:1 0 auto;border:0;background:none;color:var(--m);padding:7px 6px;font-size:10px}
+nav button.on{color:var(--a);font-weight:700}
+nav i{display:block;font-size:20px;font-style:normal}
+.sg{display:flex;gap:6px;padding:10px 14px}
+.sg button,.f button{border:1px solid var(--b);background:var(--bg);color:var(--t);border-radius:10px;padding:8px 12px}
+.sg button{flex:1}.sg button.on{background:var(--a);color:var(--c);border-color:var(--a)}
+.f{display:flex;align-items:center;gap:6px;padding:6px 14px}.f label{flex:0 0 118px;color:var(--m);font-size:13px}
+input{flex:1;min-width:0;font:inherit;color:var(--t);background:var(--bg);border:1px solid var(--b);border-radius:10px;padding:8px;direction:ltr;text-align:center}
+input[readonly]{opacity:.65}
+#ms{flex:1;color:var(--m);font-size:13px}
+.clk{font-size:46px;font-weight:600;text-align:center;direction:ltr;color:var(--a);padding-top:12px;font-variant-numeric:tabular-nums}
+.dy,.hj{text-align:center}.hj{color:var(--m);padding-bottom:14px}
+.hero{display:flex;align-items:center;gap:16px;padding:14px}.hero .ph{font-size:20px;font-weight:600;color:var(--a)}
+#sts{width:100%;padding:10px;border-radius:10px;border:1px solid var(--b);background:var(--bg);color:var(--t);font:inherit}#hm,#nfc{display:grid;gap:6px;padding:10px 14px}#hm button,#nfc button{border:1px solid var(--b);background:var(--bg);color:var(--t);border-radius:10px;padding:9px;text-align:start}#hm button.on,#nfc button.on{background:var(--a);color:var(--c);border-color:var(--a)}
+.lk{display:inline-block;border:1px solid var(--a);background:var(--a);color:var(--c);border-radius:10px;padding:9px 14px;font:inherit;text-decoration:none;cursor:pointer}body:not(.lic) .pr{display:none}body.lic .npr{display:none}
+</style>
+</head>
+<body>
+<header class="hd"><div><h1>🔭 الفلكي</h1><small>الشمس والقمر والصلاة والوقت النجمي</small></div><button id="dgt"></button></header>
+<main>
+<section id="s0" class="on">
+<div class="w"><h3>📍 الموقع الجغرافي</h3>
+<div class="sg" id="gm"><button data-v="1">تلقائي</button><button data-v="0">يدوي</button></div>
+<div class="f"><label>خط العرض (+ شمال)</label><input id="lat" data-k inputmode="decimal"><button class="pm" data-s="lat">±</button></div>
+<div class="f"><label>خط الطول (+ شرق)</label><input id="lon" data-k inputmode="decimal"><button class="pm" data-s="lon">±</button></div>
+<div class="f"><label>المنطقة الزمنية UTC</label><input id="tz" data-k inputmode="decimal"><button class="pm" data-s="tz">±</button></div>
+<div class="f"><span id="ms"></span><button id="ga">📡 تحديد الموقع</button></div></div>
+<div class="w"><h3>🕐 التاريخ والوقت</h3>
+<div class="sg" id="tmd"><button data-v="1">الآن</button><button data-v="0">وقت محدد</button></div>
+<div id="man" hidden>
+<div class="f"><label>التاريخ الغريغوري</label><input id="dd" data-k type="date"></div>
+<div class="f"><label>الوقت (24 ساعة)</label><input id="hh" data-k inputmode="numeric" placeholder="ساعة"><input id="mm" data-k inputmode="numeric" placeholder="دقيقة"><input id="ss" data-k inputmode="numeric" placeholder="ثانية"></div></div>
+<div id="o0"></div></div>
+</section>
+<section id="s1"></section><section id="s2"></section><section id="s3"></section><section id="s4"></section>
+<section id="s5"><div id="s5d"></div><div class="w pr"><h3>⭐ اختر نجمًا</h3><div style="padding:10px 14px"><select id="sts"></select></div></div><div id="s5e"></div></section><section id="s6"></section><section id="s7"><div class="w"><h3>🌐 اللغة</h3><div class="sg" id="lg"><button data-l="ar">العربية</button><button data-l="fr">Français</button><button data-l="en">English</button><button data-l="tr">Türkçe</button></div></div><div class="w" id="licw"><h3>🔑 تفعيل Premium</h3><div class="r" id="licst"></div><div id="licgrp"><div class="f"><input id="lick" placeholder="الصق كود التفعيل هنا" style="flex:1;direction:ltr"><button id="licb">فعّل الآن</button></div><div id="licbuy" style="padding:6px 14px"></div></div><div style="padding:6px 14px"><button id="licb2" class="lk" hidden>إلغاء التفعيل</button></div><div class="r" id="licm" style="color:var(--m);font-size:12px"></div></div><div class="w pr"><h3>⏱️ دقائق التمكين للصلوات</h3><div id="tkb"></div><div class="f"><label>ارتفاع الشمس لبداية الضحى (°)</label><button data-z="-.5">−</button><input id="dzv" readonly><button data-z=".5">+</button></div><div class="r" style="color:var(--m);font-size:12px">دقائق تضاف إلى وقت كل صلاة احتياطًا (تمكينًا) ويمكن جعلها سالبة، ولا تؤثر في حساب الثلث الأخير من الليل</div></div>
+<div class="w"><h3>🔔 الإشعارات</h3><div class="sg" id="nfo"><button data-v="0">إيقاف</button><button data-v="1">تفعيل</button></div><div id="nfc"></div><div class="r" style="color:var(--m);font-size:12px">قبل دخول الوقت بـ (0 = بلا إشعار مسبق)، مع إشعار آخر عند دخول الوقت دائمًا</div><div id="nfd"></div><div class="f pr"><button id="nfx" style="flex:1;border:1px solid var(--b);background:var(--bg);color:var(--t);border-radius:10px;padding:9px">تصدير التنبيهات إلى تقويم الهاتف (الصلوات 30 يومًا والمناسبات سنة)</button></div><div class="r pr" style="color:var(--m);font-size:12px">تعمل الإشعارات أثناء فتح التطبيق فقط؛ للتنبيه والتطبيق مغلق صدّر الملف إلى تقويم الهاتف وافتحه ليضيف الأحداث مع منبهاتها</div><div class="r npr" style="color:var(--m);font-size:12px">تعمل الإشعارات أثناء فتح التطبيق فقط</div><div class="r" id="nfm" style="color:var(--m);font-size:12px"></div></div>
+<div class="w pr"><h3>📅 طريقة حساب التاريخ الهجري</h3><div id="hm"></div>
+<div class="f"><label>تعديل بالأيام</label><button data-o="-1">−</button><input id="ho" readonly><button data-o="1">+</button></div>
+<div class="f"><label>اليوم يبدأ عند الغروب</label><div class="sg" id="hs" style="flex:1;padding:0"><button data-v="0">لا</button><button data-v="1">نعم</button></div></div></div>
+<div class="w pr"><h3>🔎 تاريخ اليوم بكل الطرق</h3><div id="hc"></div></div></section>
+</main>
+<nav><button class="on" data-s="0"><i>📍</i>الموقع</button><button data-s="1"><i>🕌</i>الصلوات</button><button data-s="2"><i>☀️</i>الشمس</button><button data-s="3"><i>🌙</i>القمر</button><button data-s="4"><i>🌒</i>الهلال</button><button data-s="5"><i>✨</i>النجوم</button><button data-s="6"><i>🕋</i>القبلة</button><button data-s="7"><i>⚙️</i>الإعدادات</button></nav>
+<script>
+const DUM=new Proxy(function(){},{get:(t,k)=>k=='classList'?{toggle(){},add(){},remove(){}}:k=='dataset'||k=='style'?{}:k=='value'?'':DUM,set:()=>true,apply:()=>DUM}),$=q=>document.querySelector(q)||DUM,P=Math.PI/180,sn=x=>Math.sin(x*P),cs=x=>Math.cos(x*P),as=Math.asin,at=Math.atan2,
+n360=x=>(x%360+360)%360,n180=x=>{x=n360(x);return x>180?x-360:x},dg=x=>x/P,p2=n=>String(n).padStart(2,'0'),DT=69/86400,
+ac=x=>dg(Math.acos(Math.max(-1,Math.min(1,x)))),
+num=s=>parseFloat(String(s).replace(/[٠-٩]/g,c=>c.charCodeAt(0)-1632).replace(/[٫,،]/g,'.').replace(/[−–]/g,'-')),
+cl=(x,m)=>Math.min(Math.max(x||0,0),m);
+let st={auto:true,lat:21.4225,lon:39.8262,tz:3,now:true,ar:false,d:'',hh:0,mm:0,ss:0,hm:'umalqura',ho:0,hs:false,lg:'ar',nf:{on:0,p:1,n:1,s:1,h:1,e:1,z:1,q:1},nl:0,tk:[0,0,0,0,0],dz:4,sx:0,ld:{p:[10,'m'],n:[3,'h'],s:[30,'m'],h:[1,'d'],z:[1,'d'],q:[5,'m'],e:[1,'h']}};
+try{Object.assign(st,JSON.parse(localStorage.getItem('astro')||'{}'))}catch(e){}
+if(st.nf.z==null)st.nf.z=1;if(st.nf.q==null)st.nf.q=1;if(!st.ld.q)st.ld.q=[5,'m'];
+const save=()=>{try{localStorage.setItem('astro',JSON.stringify({auto:st.auto,lat:st.lat,lon:st.lon,tz:st.tz,ar:st.ar,hm:st.hm,ho:st.ho,hs:st.hs,lg:st.lg,nf:st.nf,nl:st.nl,tk:st.tk,dz:st.dz,sx:st.sx,ld:st.ld}))}catch(e){}};
+
+
+let LIC=null,LK={},LPUB=null,LCFG={};
+const pro=()=>!!LIC,REV=[],D0=Date.UTC(2026,0,1)/864e5,
+LKI={1:'أوقات إضافية: ثلث الليل الأخير وقيام الليل والإسفار الأعلى والضحى، ودقائق التمكين',
+2:'الإحداثيات البروجية والاستوائية، والظل والزوال وأدنى وأقصى ارتفاع، ورؤوس البروج، ومنزلة الشمس، والكسوف',
+3:'بيانات القمر المفصلة وإحداثياته، ومنزلة القمر، والأوج والحضيض، والخسوف',
+4:'استطلاع الهلال الجديد كاملًا: المكث والعمر والارتفاع والمطال، ومعايير يالوب وعودة وحدود الرؤية، ورؤية أم القرى ويوم الفاتح',
+5:'النجوم والوقت النجمي: 79 نجمًا مع نجوم المنازل، إحداثياتها وطلوعها وغروبها',
+6:'استقبال الشمس والظل والنجوم للقبلة، وتعامد الشمس على الكعبة، والاستدلال بالنجوم ليلًا'},
+esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),
+b64d=s=>{s=String(s).replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';const b=atob(s),o=new Uint8Array(b.length);for(let i=0;i<b.length;i++)o[i]=b.charCodeAt(i);return o},
+lockCard=n=>`<div class=w><h3>🔒 ${tt('ميزات Premium')}</h3><div class=r style="color:var(--m);font-size:13px">${tt(LKI[n])}</div><div class=r style="justify-content:center"><button class=lk onclick="gotoLic()">${tt('تفعيل Premium')}</button></div></div>`;
+function gotoLic(){const b=[...document.querySelectorAll('nav button')].find(x=>x.dataset.s=='7');if(b)b.click();const e=$('#licw');if(e.scrollIntoView)e.scrollIntoView();setTimeout(()=>{const k=$('#lick');if(k.focus)k.focus()},80)}
+function lkRender(){for(const k in LK){const e=$('#s'+k);e.innerHTML+=lockCard(+k)}LK={}}
+async function lpub(){if(LPUB)return LPUB;let t;try{const r=await fetch('licpub.txt',{cache:'no-cache'});if(!r.ok)throw 0;t=(await r.text()).trim()}catch(e){throw new Error('net')}
+try{LPUB=await crypto.subtle.importKey('raw',b64d(t),{name:'ECDSA',namedCurve:'P-256'},false,['verify'])}catch(e){throw new Error('net')}return LPUB}
+async function lverify(code){code=String(code||'').replace(/\s+/g,'');if(code.indexOf('#k=')>=0)code=code.split('#k=')[1];let b;try{b=b64d(code)}catch(e){throw new Error('bad')}
+if(b.length<73||b[0]!=1)throw new Error('bad');const p=b.slice(0,b.length-64),sg=b.slice(b.length-64),pk=await lpub();
+if(!await crypto.subtle.verify({name:'ECDSA',hash:'SHA-256'},pk,sg,p))throw new Error('bad');
+const dv=new DataView(p.buffer,p.byteOffset,p.byteLength),id=dv.getUint32(1),fl=p[5],ex=dv.getUint16(6),ll=p[8],lb=new TextDecoder().decode(p.slice(9,9+ll));
+if(!(fl&1))throw new Error('bad');if(REV.includes(id))throw new Error('rev');if(ex&&Date.now()/864e5>D0+ex)throw new Error('exp');return{code,id,ex,label:lb}}
+async function lact(code){try{LIC=await lverify(code);try{localStorage.setItem('astroLic',JSON.stringify(LIC))}catch(e){}licUI();render();return'ok'}catch(e){const m=e&&e.message;return['rev','exp','net'].includes(m)?m:'bad'}}
+function licMsg(r){$('#licm').textContent=tt(r=='ok'?'تم التفعيل بنجاح ✓':r=='rev'?'هذا الكود ملغى':r=='exp'?'انتهت صلاحية الكود':r=='net'?'تعذّر تحميل مفتاح التحقق: تأكد من الاتصال بالإنترنت':'الكود غير صحيح')}
+function licUI(){document.body.classList.toggle('lic',pro());
+$('#licst').innerHTML=pro()?'✓ '+tt('Premium مفعّل')+' — '+tt('مرخّص لـ')+': '+esc(LIC.label||'—')+(LIC.ex?' — '+tt('ينتهي في')+' '+new Date((D0+LIC.ex)*864e5).toISOString().slice(0,10):''):tt('النسخة المجانية: الميزات المتقدمة مقفلة');
+$('#licb2').hidden=!pro();$('#licgrp').hidden=pro();
+$('#licbuy').innerHTML=LCFG.whatsapp?`<a class=lk href="https://wa.me/${esc(LCFG.whatsapp)}?text=${encodeURIComponent(tt('أريد تفعيل Premium لتطبيق الفلكي'))}">${tt('اشترِ كود التفعيل عبر واتساب')}${LCFG.price?' — '+esc(LCFG.price):''}</a>`:''}
+async function linit(){let s=null;try{s=JSON.parse(localStorage.getItem('astroLic')||'null')}catch(e){}
+if(s&&s.code&&typeof s.label=='string'){LIC=s;licUI();lverify(s.code).catch(e=>{const m=e&&e.message;if(m=='bad'||m=='rev'||m=='exp'){LIC=null;try{localStorage.removeItem('astroLic')}catch(x){}licUI();render()}})}
+try{const r=await fetch('pro-config.json',{cache:'no-cache'});if(r.ok)LCFG=await r.json()}catch(e){}
+licUI();const h=location.hash;if(h.indexOf('#k=')==0){const c=h.slice(3);try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}licMsg(await lact(c))}}
+
+const LI={fr:0,en:1,tr:2},L={};`
+الفلكي|L'Astronome|Astronomer|Astronom
+الشمس والقمر والصلاة والوقت النجمي|Soleil, Lune, prière, temps sidéral|Sun, Moon, prayer, sidereal time|Güneş, Ay, namaz, yıldız zamanı
+الموقع الجغرافي|Position géographique|Location|Konum
+تلقائي|Auto|Auto|Otomatik
+يدوي|Manuel|Manual|Elle
+خط العرض (+ شمال)|Latitude (+ nord)|Latitude (+ north)|Enlem (+ kuzey)
+خط الطول (+ شرق)|Longitude (+ est)|Longitude (+ east)|Boylam (+ doğu)
+المنطقة الزمنية UTC|Fuseau horaire UTC|Time zone UTC|Saat dilimi UTC
+تحديد الموقع|Me localiser|Locate me|Konumumu bul
+التاريخ والوقت|Date et heure|Date & time|Tarih ve saat
+الآن|Maintenant|Now|Şimdi
+وقت محدد|Heure précise|Custom time|Belirli zaman
+التاريخ الغريغوري|Date grégorienne|Gregorian date|Miladi tarih
+الوقت (24 ساعة)|Heure (24 h)|Time (24 h)|Saat (24 s)
+ساعة|h|h|sa
+دقيقة|min|min|dk
+ثانية|s|s|sn
+الموقع|Position|Location|Konum
+الصلوات|Prières|Prayers|Namaz
+الشمس|Soleil|Sun|Güneş
+القمر|Lune|Moon|Ay
+النجمي|Sidéral|Sidereal|Yıldız
+الإعدادات|Réglages|Settings|Ayarlar
+اللغة|Langue|Language|Dil
+طريقة حساب التاريخ الهجري|Calcul de la date hégirienne|Hijri date method|Hicri tarih yöntemi
+أم القرى (السعودية)|Oumm al-Qura (Arabie saoudite)|Umm al-Qura (Saudi Arabia)|Ümmülkura (Suudi Arabistan)
+مدني جدولي (أصل الجمعة)|Civil tabulaire (époque vendredi)|Tabular civil (Friday epoch)|Cetvelli sivil (Cuma başlangıcı)
+فلكي جدولي (أصل الخميس)|Astronomique tabulaire (époque jeudi)|Tabular astronomical (Thursday epoch)|Cetvelli astronomik (Perşembe başlangıcı)
+حساب الهلال: اقتران قبل الغروب + مكث القمر|Croissant : conjonction avant le coucher + durée de présence|Crescent: conjunction before sunset + moon lag|Hilal: batıştan önce kavuşum + Ay'ın kalışı
+تعديل بالأيام|Ajustement (jours)|Adjust (days)|Gün ayarı
+اليوم يبدأ عند الغروب|Le jour commence au coucher|Day starts at sunset|Gün batımında başlar
+لا|Non|No|Hayır
+نعم|Oui|Yes|Evet
+تاريخ اليوم بكل الطرق|Date du jour selon chaque méthode|Today by every method|Bugün, her yönteme göre
+الصلاة القادمة|Prochaine prière|Next prayer|Sıradaki namaz
+الفجر|Fajr|Fajr|İmsak
+الظهر|Dhouhr|Dhuhr|Öğle
+العصر|Asr|Asr|İkindi
+المغرب|Maghreb|Maghrib|Akşam
+العشاء|Icha|Isha|Yatsı
+أوقات الصلوات الخمس|Heures des cinq prières|Five daily prayer times|Beş vakit namaz saatleri
+الفجر (18° تحت الأفق)|Fajr (18° sous l'horizon)|Fajr (18° below horizon)|İmsak (ufkun 18° altı)
+الشروق|Lever|Rise|Doğuş
+العصر (الجمهور)|Asr (majorité)|Asr (majority)|İkindi (cumhur)
+العشاء (المغرب + 90 د)|Icha (Maghreb + 90 min)|Isha (Maghrib + 90 min)|Yatsı (Akşam + 90 dk)
+الإحداثيات البروجية|Coordonnées écliptiques|Ecliptic coordinates|Ekliptik koordinatlar
+الطول البروجي λ|Longitude écliptique λ|Ecliptic longitude λ|Ekliptik boylam λ
+العرض البروجي β|Latitude écliptique β|Ecliptic latitude β|Ekliptik enlem β
+البرج|Signe|Zodiac sign|Burç
+الإحداثيات الاستوائية|Coordonnées équatoriales|Equatorial coordinates|Ekvatoral koordinatlar
+المطلع المستقيم α|Ascension droite α|Right ascension α|Sağ açıklık α
+المطلع المستقيم α (درجات)|Ascension droite α (degrés)|Right ascension α (degrees)|Sağ açıklık α (derece)
+الميل δ|Déclinaison δ|Declination δ|Dik açıklık δ
+الزاوية الساعية H|Angle horaire H|Hour angle H|Saat açısı H
+الإحداثيات الأفقية|Coordonnées horizontales|Horizontal coordinates|Ufuk koordinatları
+الارتفاع الحقيقي h|Hauteur vraie h|True altitude h|Gerçek yükseklik h
+الارتفاع الظاهري (مع الانكسار)|Hauteur apparente (réfraction)|Apparent altitude (refraction)|Görünür yükseklik (kırılmalı)
+البعد السمتي z|Distance zénithale z|Zenith distance z|Zenit uzaklığı z
+السمت A (من الشمال)|Azimut A (depuis le nord)|Azimuth A (from north)|Azimut A (kuzeyden)
+الشروق والزوال والغروب|Lever, culmination, coucher|Rise, transit, set|Doğuş, öğle, batış
+الزوال|Culmination|Transit|Öğle
+الغروب|Coucher|Set|Batış
+المسافة (وحدة فلكية)|Distance (unité astronomique)|Distance (astronomical units)|Uzaklık (astronomik birim)
+المسافة (مليون كم)|Distance (millions de km)|Distance (million km)|Uzaklık (milyon km)
+بيانات أخرى|Autres données|Other data|Diğer veriler
+مدة النهار|Durée du jour|Day length|Gündüz süresi
+مدة الليل|Durée de la nuit|Night length|Gece süresi
+نصف القطر الظاهري|Rayon apparent|Apparent radius|Görünür yarıçap
+معادلة الزمن|Équation du temps|Equation of time|Zaman denklemi
+مضاءة|éclairée|illuminated|aydınlık
+بيانات القمر الخاصة|Données propres à la Lune|Lunar data|Aya özgü veriler
+الاستطالة (المطال)|Élongation|Elongation|Elongasyon
+العمر|Âge|Age|Yaş
+يوم|j|d|g
+نسبة الإضاءة|Fraction éclairée|Illuminated fraction|Aydınlık oranı
+الطور|Phase|Phase|Evre
+زاوية الطور|Angle de phase|Phase angle|Evre açısı
+المكث (فرق الغروب)|Durée de présence (écart de coucher)|Moon lag (sunset gap)|Kalış süresi (batış farkı)
+اختلاف المنظر الأفقي|Parallaxe horizontale|Horizontal parallax|Ufuk paralaksı
+الاقتران (المحاق)|Conjonction (nouvelle lune)|Conjunction (new moon)|Kavuşum (yeni ay)
+السابق|Précédente|Previous|Önceki
+القادم|Prochaine|Next|Sonraki
+الساعة|à|at|saat
+المسافة (كم)|Distance (km)|Distance (km)|Uzaklık (km)
+المحاق (الاقتران)|Nouvelle lune (conjonction)|New moon (conjunction)|Yeni ay (kavuşum)
+هلال متزايد|Croissant ascendant|Waxing crescent|Büyüyen hilal
+التربيع الأول|Premier quartier|First quarter|İlk dördün
+أحدب متزايد|Gibbeuse croissante|Waxing gibbous|Şişkin ay (büyüyen)
+البدر|Pleine lune|Full moon|Dolunay
+أحدب متناقص|Gibbeuse décroissante|Waning gibbous|Şişkin ay (küçülen)
+التربيع الأخير|Dernier quartier|Last quarter|Son dördün
+هلال متناقص|Croissant descendant|Waning crescent|Küçülen hilal
+الحمل|Bélier|Aries|Koç
+الثور|Taureau|Taurus|Boğa
+الجوزاء|Gémeaux|Gemini|İkizler
+السرطان|Cancer|Cancer|Yengeç
+الأسد|Lion|Leo|Aslan
+العذراء|Vierge|Virgo|Başak
+الميزان|Balance|Libra|Terazi
+العقرب|Scorpion|Scorpio|Akrep
+القوس|Sagittaire|Sagittarius|Yay
+الجدي|Capricorne|Capricorn|Oğlak
+الدلو|Verseau|Aquarius|Kova
+الحوت|Poissons|Pisces|Balık
+الوقت النجمي عند الساعة 0 (غرينتش)|Temps sidéral à 0 h (Greenwich)|Sidereal time at 0 h (Greenwich)|Saat 0'da yıldız zamanı (Greenwich)
+بتاريخ UT|À la date UT|On UT date|UT tarihinde
+المتوسط|Moyen|Mean|Ortalama
+الظاهري|Apparent|Apparent|Görünür
+الوقت النجمي العالمي (غرينتش)|Temps sidéral universel (Greenwich)|Greenwich sidereal time|Greenwich yıldız zamanı
+الوقت النجمي المحلي|Temps sidéral local|Local sidereal time|Yerel yıldız zamanı
+معادلة الاعتدالين|Équation des équinoxes|Equation of the equinoxes|Ekinoks denklemi
+ℹ️ معادلة الاعتدالين|ℹ️ Équation des équinoxes|ℹ️ Equation of the equinoxes|ℹ️ Ekinoks denklemi
+بالثواني|En secondes|In seconds|Saniye cinsinden
+الظل|Ombre|Shadow|Gölge
+طول الظل (قامة 60 سم)|Longueur de l'ombre (gnomon de 60 cm)|Shadow length (60 cm gnomon)|Gölge uzunluğu (60 cm çubuk)
+سمت الظل (من الشمال)|Azimut de l'ombre (depuis le nord)|Shadow azimuth (from north)|Gölge azimutu (kuzeyden)
+لا ظل — غربت الشمس|Pas d'ombre : le soleil est couché|No shadow: the sun has set|Gölge yok: güneş battı
+لا ظل — لم تشرق الشمس بعد|Pas d'ombre : le soleil n'est pas encore levé|No shadow: the sun hasn't risen yet|Gölge yok: güneş henüz doğmadı
+سم|cm|cm|cm
+م|m|m|m
+ميزات Premium|Fonctions Premium|Premium features|Premium özellikler
+تفعيل Premium|Activer Premium|Activate Premium|Premium'u etkinleştir
+النسخة المجانية: الميزات المتقدمة مقفلة|Version gratuite : les fonctions avancées sont verrouillées|Free version: advanced features are locked|Ücretsiz sürüm: gelişmiş özellikler kilitli
+Premium مفعّل|Premium activé|Premium activated|Premium etkin
+مرخّص لـ|Licencié à|Licensed to|Lisans sahibi
+ينتهي في|Expire le|Expires on|Bitiş tarihi
+الصق كود التفعيل هنا|Collez le code d'activation ici|Paste the activation code here|Etkinleştirme kodunu buraya yapıştırın
+فعّل الآن|Activer|Activate|Etkinleştir
+إلغاء التفعيل|Retirer la licence|Remove license|Lisansı kaldır
+تم التفعيل بنجاح ✓|Activation réussie ✓|Activated successfully ✓|Etkinleştirme başarılı ✓
+الكود غير صحيح|Code invalide|Invalid code|Geçersiz kod
+انتهت صلاحية الكود|Code expiré|Code expired|Kodun süresi doldu
+هذا الكود ملغى|Ce code a été révoqué|This code has been revoked|Bu kod iptal edildi
+تعذّر تحميل مفتاح التحقق: تأكد من الاتصال بالإنترنت|Clé de vérification introuvable : vérifiez votre connexion|Couldn't load the verification key: check your connection|Doğrulama anahtarı yüklenemedi: bağlantınızı kontrol edin
+اشترِ كود التفعيل عبر واتساب|Acheter le code via WhatsApp|Buy the activation code via WhatsApp|Etkinleştirme kodunu WhatsApp'tan satın alın
+أريد تفعيل Premium لتطبيق الفلكي|Je veux activer Premium pour l'application Al-Falaki|I want to activate Premium for the Al-Falaki app|Al-Falaki uygulaması için Premium'u etkinleştirmek istiyorum
+أوقات إضافية: ثلث الليل الأخير وقيام الليل والإسفار الأعلى والضحى، ودقائق التمكين|Horaires supplémentaires : dernier tiers de la nuit, prière nocturne, isfar élevé, Duha et minutes de précaution|Extra times: last third of the night, night prayer, high isfar, Duha and precaution minutes|Ek vakitler: gecenin son üçte biri, teheccüd, yüksek isfar, duha ve ihtiyat dakikaları
+الإحداثيات البروجية والاستوائية، والظل والزوال وأدنى وأقصى ارتفاع، ورؤوس البروج، ومنزلة الشمس، والكسوف|Coordonnées écliptiques et équatoriales, ombre et midi solaire, hauteurs min/max, entrée du Soleil dans les signes, mansion lunaire et éclipses|Ecliptic and equatorial coordinates, shadow and solar noon, min/max altitude, zodiac ingresses, lunar mansion and eclipses|Ekliptik ve ekvatoral koordinatlar, gölge ve öğle, en düşük/yüksek yükseklik, burç girişleri, menzil ve tutulmalar
+بيانات القمر المفصلة وإحداثياته، ومنزلة القمر، والأوج والحضيض، والخسوف|Données détaillées de la Lune, coordonnées, mansion lunaire, apogée et périgée, éclipses|Detailed Moon data and coordinates, lunar mansion, apogee and perigee, eclipses|Ayın ayrıntılı verileri ve koordinatları, menzil, yer uzağı ve yer yakını, tutulmalar
+استطلاع الهلال الجديد كاملًا: المكث والعمر والارتفاع والمطال، ومعايير يالوب وعودة وحدود الرؤية، ورؤية أم القرى ويوم الفاتح|Observation complète du nouveau croissant : présence, âge, hauteur, élongation, critères de Yallop et d'Odeh, limites de visibilité, Oumm al-Qura et 1er du mois|Full new-crescent survey: lag, age, altitude, elongation, Yallop and Odeh criteria, visibility limits, Umm al-Qura and first day of the month|Yeni hilal taramasının tamamı: kalış, yaş, yükseklik, elongasyon, Yallop ve Odeh ölçütleri, görünürlük sınırları, Ümmülkura ve ayın ilk günü
+النجوم والوقت النجمي: 79 نجمًا مع نجوم المنازل، إحداثياتها وطلوعها وغروبها|Étoiles et temps sidéral : 79 étoiles dont celles des mansions, coordonnées, lever et coucher|Stars and sidereal time: 79 stars including the lunar-mansion stars, coordinates, rise and set|Yıldızlar ve yıldız zamanı: menzil yıldızları dahil 79 yıldız, koordinatlar, doğuş ve batış
+استقبال الشمس والظل والنجوم للقبلة، وتعامد الشمس على الكعبة، والاستدلال بالنجوم ليلًا|Alignement du Soleil, de l'ombre et des étoiles avec la qibla, Soleil au zénith de la Kaaba, repérage nocturne par les étoiles|Sun, shadow and star alignment with the qibla, sun over the Kaaba, finding the qibla by stars at night|Güneş, gölge ve yıldızların kıble hizası, Güneş'in Kâbe'nin tepesinde olması, geceleyin yıldızlarla yön bulma
+تعمل الإشعارات أثناء فتح التطبيق فقط|Les notifications fonctionnent uniquement quand l'application est ouverte|Notifications work only while the app is open|Bildirimler yalnızca uygulama açıkken çalışır
+الارتفاع الحقيقي عند الزوال (بلا انكسار)|Hauteur vraie à midi solaire (sans réfraction)|True altitude at solar noon (no refraction)|Öğle vaktinde gerçek yükseklik (kırılmasız)
+سمت الشمس عند الزوال|Azimut du Soleil à midi solaire|Sun azimuth at solar noon|Öğle vaktinde güneşin azimutu
+لا ظل: الشمس تحت الأفق عند الزوال|Pas d'ombre : Soleil sous l'horizon à midi solaire|No shadow: sun below the horizon at solar noon|Gölge yok: öğle vaktinde güneş ufkun altında
+مدى الارتفاع (الأقصى − الأدنى)|Amplitude de hauteur (max − min)|Altitude range (max − min)|Yükseklik aralığı (en çok − en az)
+رؤوس البروج (دخول الشمس في كل برج)|Entrées du Soleil dans les signes du zodiaque|Sun's entry into each zodiac sign|Güneşin her burca girişi
+اعتدال مارس|Équinoxe de mars|March equinox|Mart ekinoksu
+انقلاب يونيو|Solstice de juin|June solstice|Haziran gündönümü
+اعتدال سبتمبر|Équinoxe de septembre|September equinox|Eylül ekinoksu
+انقلاب ديسمبر|Solstice de décembre|December solstice|Aralık gündönümü
+التواريخ حسب فلك البروج المداري وبتوقيتك المحلي؛ الاعتدالان والانقلابان دقتها نحو دقيقة وبقية الرؤوس نحو 3 دقائق|Dates selon le zodiaque tropical, à votre heure locale ; équinoxes et solstices précis à environ 1 min, autres entrées à environ 3 min|Dates by the tropical zodiac, in your local time; equinoxes and solstices accurate to about 1 min, other entries to about 3 min|Tarihler tropikal zodyağa göre, yerel saatinizle; ekinoks ve gündönümleri yaklaşık 1 dk, diğerleri yaklaşık 3 dk doğrulukta
+الأوج والحضيض|Apogée et périgée|Apogee and perigee|Apoje ve perije
+الحضيض (أقرب نقطة من الأرض)|Périgée (point le plus proche de la Terre)|Perigee (closest to Earth)|Perije (Dünya'ya en yakın nokta)
+الأوج (أبعد نقطة عن الأرض)|Apogée (point le plus éloigné de la Terre)|Apogee (farthest from Earth)|Apoje (Dünya'ya en uzak nokta)
+المسافة من مركز الأرض إلى مركز القمر، والقطر الظاهري بالدقائق القوسية؛ دقة الأوقات نحو 10 دقائق|Distance du centre de la Terre au centre de la Lune et diamètre apparent en minutes d'arc ; heures précises à environ 10 min|Distance from Earth's center to the Moon's center and apparent diameter in arcminutes; times accurate to about 10 min|Dünya merkezinden Ay merkezine uzaklık ve görünür çap (yay dakikası); saatler yaklaşık 10 dk doğrulukta
+أقصى ارتفاع للشمس (الزوال)|Hauteur maximale du Soleil (midi solaire)|Sun's maximum altitude (solar noon)|Güneşin en yüksek yüksekliği (öğle)
+أدنى ارتفاع للشمس (منتصف الليل الشمسي)|Hauteur minimale du Soleil (minuit solaire)|Sun's minimum altitude (solar midnight)|Güneşin en düşük yüksekliği (gece yarısı)
+استقبال النجم للقبلة|Étoile dans la direction de la qibla|Star in the qibla direction|Yıldız kıble yönünde
+استقبال القبلة (الشمس والظل والنجم المختار)|Alignement avec la qibla (Soleil, ombre, étoile choisie)|Qibla alignment (sun, shadow, selected star)|Kıble hizası (güneş, gölge, seçilen yıldız)
+ميلاد الهلال (الاقتران)|Naissance du croissant (conjonction)|New crescent birth (conjunction)|Hilalin doğuşu (kavuşum)
+بداية كسوف الشمس|Début de l'éclipse de Soleil|Solar eclipse begins|Güneş tutulması başlıyor
+بداية خسوف القمر|Début de l'éclipse de Lune|Lunar eclipse begins|Ay tutulması başlıyor
+قبل دخول الوقت بـ (0 = بلا إشعار مسبق)، مع إشعار آخر عند دخول الوقت دائمًا|Préavis avant l'heure (0 = aucun préavis) ; une seconde notification à l'heure elle-même est toujours envoyée|Advance notice before the time (0 = none); a second notification at the time itself is always sent|Vakitten önce uyarı (0 = uyarı yok); vakit girdiğinde ayrıca her zaman bildirim gönderilir
+النجوم|Étoiles|Stars|Yıldızlar
+اختر نجمًا|Choisir une étoile|Choose a star|Yıldız seçin
+الاسم|Nom|Name|Ad
+التسمية العلمية|Désignation|Designation|Bilimsel ad
+القدر الظاهري|Magnitude apparente|Apparent magnitude|Görünür parlaklık
+البعد|Distance|Distance|Uzaklık
+سنة ضوئية|a.l.|ly|ıy
+الطيف|Type spectral|Spectral type|Tayf türü
+منزلة من منازل القمر|Mansion lunaire|Lunar mansion|Ay menzili
+الحالة الآن|État actuel|Current state|Şu anki durum
+تحت الأفق|Sous l'horizon|Below the horizon|Ufkun altında
+فوق الأفق ويمكن رؤيته|Au-dessus de l'horizon, visible|Above the horizon, visible|Ufkun üstünde, görülebilir
+فوق الأفق لكن السماء مضيئة|Au-dessus de l'horizon mais ciel clair|Above the horizon but the sky is bright|Ufkun üstünde ama gökyüzü aydınlık
+مدة الظهور فوق الأفق|Durée au-dessus de l'horizon|Time above the horizon|Ufkun üstünde kalma süresi
+نجم دائم الظهور في موقعك|Étoile circumpolaire à votre position|Circumpolar star at your location|Konumunuzda dairesel (hep görünür) yıldız
+نجم لا يطلع في موقعك|Cette étoile ne se lève jamais chez vous|This star never rises at your location|Bu yıldız konumunuzda hiç doğmaz
+أسطع النجوم فوق الأفق الآن|Étoiles les plus brillantes au-dessus de l'horizon|Brightest stars above the horizon now|Şu an ufkun üstündeki en parlak yıldızlar
+الشمس فوق الأفق: النجوم غير مرئية الآن|Soleil levé : étoiles invisibles|Sun above the horizon: stars not visible|Güneş ufkun üstünde: yıldızlar görünmez
+القيمة: السمت / الارتفاع|Valeur : azimut / hauteur|Value: azimuth / altitude|Değer: azimut / yükseklik
+إحداثيات النجوم لعام 2000 مع تصحيح المبادرة؛ دقتها نحو دقيقتين قوسيتين|Coordonnées J2000 corrigées de la précession ; précision d'environ 2 minutes d'arc|J2000 coordinates corrected for precession; accuracy about 2 arcminutes|J2000 koordinatları, presesyon düzeltmeli; doğruluk yaklaşık 2 yay dakikası
+الاستدلال بالنجوم على القبلة|Se repérer avec les étoiles pour la qibla|Finding the qibla by stars|Yıldızlarla kıbleyi bulma
+الشمس فوق الأفق أو الشفق: النجوم غير ظاهرة الآن|Soleil levé ou crépuscule : étoiles invisibles|Sun up or twilight: stars not visible now|Güneş ufkun üstünde veya alacakaranlık: yıldızlar görünmez
+ارتفاع النجم القطبي (الشمال الحقيقي)|Hauteur de l'étoile Polaire (nord vrai)|Polaris altitude (true north)|Kutup yıldızı yüksekliği (gerçek kuzey)
+قف مواجهًا النجم القطبي ثم انعطف|Face à l'étoile Polaire, puis tournez de|Face Polaris, then turn|Kutup yıldızına dönün, sonra şu kadar dönün
+قف مواجهًا هذا النجم ثم انعطف|Face à cette étoile, puis tournez de|Face this star, then turn|Bu yıldıza dönün, sonra şu kadar dönün
+لا نجم لامع قرب سمت القبلة الآن|Aucune étoile brillante près de l'azimut de la qibla|No bright star near the qibla azimuth now|Şu an kıble azimutuna yakın parlak yıldız yok
+ارتفاع الشمس عند الزوال|Hauteur du soleil à midi solaire|Sun altitude at solar noon|Öğle vaktinde güneş yüksekliği
+ظل الزوال (قامة 60 سم)|Ombre à midi solaire (gnomon de 60 cm)|Noon shadow (60 cm gnomon)|Öğle gölgesi (60 cm çubuk)
+سمت ظل الزوال (من الشمال)|Azimut de l'ombre à midi (depuis le nord)|Noon shadow azimuth (from north)|Öğle gölgesinin azimutu (kuzeyden)
+لا ظل: الشمس عمودية|Pas d'ombre : le Soleil est au zénith|No shadow: the sun is at the zenith|Gölge yok: güneş tam tepede
+ظل العصر (الجمهور: ظل الزوال + القامة)|Ombre de l'Asr (majorité : ombre de midi + gnomon)|Asr shadow (majority: noon shadow + gnomon)|İkindi gölgesi (cumhur: öğle gölgesi + çubuk)
+ظل العصر (الحنفية: ظل الزوال + ضعف القامة)|Ombre de l'Asr (hanafite : ombre de midi + 2 gnomons)|Asr shadow (Hanafi: noon shadow + 2 gnomons)|İkindi gölgesi (Hanefi: öğle gölgesi + 2 çubuk)
+حساب تقريبي: دقة الأوقات نحو دقيقة، ولا يُعتمد عليه قرب حافة مسار الكسوف الكلي أو الحلقي|Calcul approximatif : précision des heures d'environ une minute, à ne pas utiliser près du bord de la zone de totalité ou d'annularité|Approximate calculation: times accurate to about a minute; not reliable near the edge of the total or annular path|Yaklaşık hesap: saatler yaklaşık bir dakika doğrulukta; tam veya halkalı tutulma yolunun kenarında güvenilmez
+للمقارنة فقط: عند كون الشمس 5° تحت الأفق|Pour comparaison seulement : Soleil à 5° sous l'horizon|For comparison only: sun 5° below the horizon|Yalnızca karşılaştırma için: güneş ufkun 5° altındayken
+أفول القمر|Coucher de la Lune|Moonset|Ayın batışı
+تحقق شرطا أم القرى|Les deux conditions d'Oumm al-Qura sont remplies|Both Umm al-Qura conditions are met|Ümmülkura'nın iki koşulu sağlandı
+لم يتحقق شرطا أم القرى|Les conditions d'Oumm al-Qura ne sont pas remplies|The Umm al-Qura conditions are not met|Ümmülkura koşulları sağlanmadı
+مقارنة بأقل هلال شوهد|Comparaison avec le plus petit croissant vu|Comparison with the smallest crescent seen|Görülen en küçük hilalle karşılaştırma
+جهة القبلة|Côté de la qibla|Qibla side|Kıble tarafı
+انحراف القبلة|Écart de la qibla|Qibla deviation|Kıble sapması
+شمالية شرقية|Nord (vers l'est)|North (leaning east)|Kuzey (doğuya meyilli)
+شرقية شمالية|Est (vers le nord)|East (leaning north)|Doğu (kuzeye meyilli)
+شرقية جنوبية|Est (vers le sud)|East (leaning south)|Doğu (güneye meyilli)
+جنوبية شرقية|Sud (vers l'est)|South (leaning east)|Güney (doğuya meyilli)
+جنوبية غربية|Sud (vers l'ouest)|South (leaning west)|Güney (batıya meyilli)
+غربية جنوبية|Ouest (vers le sud)|West (leaning south)|Batı (güneye meyilli)
+غربية شمالية|Ouest (vers le nord)|West (leaning north)|Batı (kuzeye meyilli)
+شمالية غربية|Nord (vers l'ouest)|North (leaning west)|Kuzey (batıya meyilli)
+من الشمال نحو الشرق|du nord vers l'est|from north toward east|kuzeyden doğuya
+من الشرق نحو الشمال|de l'est vers le nord|from east toward north|doğudan kuzeye
+من الشرق نحو الجنوب|de l'est vers le sud|from east toward south|doğudan güneye
+من الجنوب نحو الشرق|du sud vers l'est|from south toward east|güneyden doğuya
+من الجنوب نحو الغرب|du sud vers l'ouest|from south toward west|güneyden batıya
+من الغرب نحو الجنوب|de l'ouest vers le sud|from west toward south|batıdan güneye
+من الغرب نحو الشمال|de l'ouest vers le nord|from west toward north|batıdan kuzeye
+من الشمال نحو الغرب|du nord vers l'ouest|from north toward west|kuzeyden batıya
+اليوم تعامد الشمس على الكعبة|Aujourd'hui, le Soleil est au zénith de la Kaaba|Today the sun is directly over the Kaaba|Bugün güneş Kâbe'nin tam tepesinde
+تعامد الشمس على الكعبة بعد 15 دقيقة|Soleil au zénith de la Kaaba dans 15 min|Sun over the Kaaba in 15 minutes|Güneş 15 dk sonra Kâbe'nin tepesinde
+تصدير التنبيهات إلى تقويم الهاتف (الصلوات 30 يومًا والمناسبات سنة)|Exporter vers le calendrier du téléphone (prières 30 jours, occasions 1 an)|Export to the phone calendar (prayers 30 days, occasions 1 year)|Telefon takvimine aktar (namazlar 30 gün, özel günler 1 yıl)
+أوقات أخرى|Autres horaires|Other times|Diğer vakitler
+ثلث الليل الأخير (يبدأ)|Dernier tiers de la nuit (début)|Last third of the night (starts)|Gecenin son üçte biri (başlangıç)
+وقت قيام الليل (قبل الفجر بساعة)|Prière nocturne (1 h avant Fajr)|Night prayer (1 h before Fajr)|Teheccüd vakti (imsaktan 1 saat önce)
+الإسفار الأعلى (الشمس 6° تحت الأفق)|Isfar élevé (Soleil à 6° sous l'horizon)|High isfar (sun 6° below the horizon)|Yüksek isfar (güneş ufkun 6° altında)
+بداية وقت الضحى|Début du Duha|Start of Duha time|Duha vaktinin başlangıcı
+دقائق التمكين للصلوات|Minutes de précaution pour les prières|Precaution minutes for prayers|Namazlar için ihtiyat dakikaları
+ارتفاع الشمس لبداية الضحى (°)|Hauteur du Soleil au début du Duha (°)|Sun altitude at Duha start (°)|Duha başlangıcında güneş yüksekliği (°)
+دقائق تضاف إلى وقت كل صلاة احتياطًا (تمكينًا) ويمكن جعلها سالبة، ولا تؤثر في حساب الثلث الأخير من الليل|Minutes ajoutées à l'heure de chaque prière par précaution (peuvent être négatives) ; sans effet sur le calcul du dernier tiers de la nuit|Minutes added to each prayer time as a precaution (can be negative); they do not affect the last-third-of-the-night calculation|Her namaz vaktine ihtiyat olarak eklenen dakikalar (negatif olabilir); gecenin son üçte biri hesabını etkilemez
+يبدأ الاستطلاع من أول غروب يبلغ فيه عمر الهلال 15 ساعة بعد الاقتران، ويتكرر كل يوم حتى تتحقق حدود الرؤية المسجلة (أقل هلال شوهد) عند كون الشمس 5° تحت الأفق، ويكون الفاتح هو اليوم التالي لآخر استطلاع|L'observation commence au premier coucher du soleil survenant 15 h après la conjonction et se répète chaque jour jusqu'à ce que les limites d'observation enregistrées (plus petit croissant vu) soient atteintes quand le Soleil est à 5° sous l'horizon ; le 1er du mois est le lendemain du dernier relevé|The survey starts at the first sunset 15 h after conjunction and repeats daily until the recorded visibility limits (smallest crescent ever seen) are reached when the sun is 5° below the horizon; the first day of the month is the day after the last survey|Tarama, kavuşumdan 15 saat sonraki ilk gün batımında başlar; güneş ufkun 5° altındayken kaydedilmiş görünürlük sınırlarına (görülen en küçük hilal) ulaşılana dek her gün tekrarlanır; ayın ilk günü son taramadan sonraki gündür
+يعني بلوغ أقل هلال سُجّلت رؤيته بالعين المجردة (1859–2005): ارتفاع 5° ومطال 7.7° ومكث 29 دقيقة وعمر 15 ساعة و33 دقيقة|signifie que le plus petit croissant vu à l'œil nu (1859–2005) est atteint : hauteur 5°, élongation 7.7°, présence 29 min, âge 15 h 33 min|means the smallest crescent ever seen with the naked eye (1859–2005) is reached: altitude 5°, elongation 7.7°, lag 29 min, age 15 h 33 min|çıplak gözle görülen en küçük hilale (1859–2005) ulaşıldığı anlamına gelir: yükseklik 5°, elongasyon 7.7°, kalış 29 dk, yaş 15 sa 33 dk
+حدود الرؤية بالمرقب (عمر 13 س 14 د، مكث 21 د، مطال 6.4°)|Limites avec instrument (âge 13 h 14, présence 21 min, élongation 6.4°)|Optical-aid limits (age 13 h 14 min, lag 21 min, elongation 6.4°)|Optik yardım sınırları (yaş 13 sa 14 dk, kalış 21 dk, elongasyon 6.4°)
+المعيار البابلي (عمر > 24 ساعة ومكث > 48 دقيقة)|Critère babylonien (âge > 24 h et présence > 48 min)|Babylonian criterion (age > 24 h and lag > 48 min)|Babil ölçütü (yaş > 24 sa ve kalış > 48 dk)
+معيار البتاني (انخفاض الشمس عند أفول الهلال ≥ 8°)|Critère d'Al-Battani (Soleil à ≥ 8° sous l'horizon au coucher du croissant)|Al-Battani criterion (sun ≥ 8° below the horizon at moonset)|Battani ölçütü (hilal batarken güneş ≥ 8° altında)
+معيار دانجون (المطال ≥ 7°)|Critère de Danjon (élongation ≥ 7°)|Danjon criterion (elongation ≥ 7°)|Danjon ölçütü (elongasyon ≥ 7°)
+الرؤية ممكنة بالعين المجردة|Visibilité possible à l'œil nu|Naked-eye visibility possible|Çıplak gözle görünürlük mümkün
+الرؤية ممكنة بالمرقب فقط: لم تبلغ حدود العين المجردة|Visibilité possible avec instrument seulement : limites de l'œil nu non atteintes|Possible with optical aid only: naked-eye limits not reached|Yalnızca optik yardımla mümkün: çıplak göz sınırlarına ulaşılmadı
+الرؤية غير ممكنة: دون أقل هلال سُجّلت رؤيته|Visibilité impossible : sous le plus petit croissant jamais vu|Not visible: below the smallest crescent ever seen|Görünürlük mümkün değil: görülen en küçük hilalin altında
+الرؤية غير ممكنة: لم يتحقق شرطا أم القرى|Visibilité impossible : conditions d'Oumm al-Qura non remplies|Not visible: Umm al-Qura conditions not met|Görünürlük mümkün değil: Ümmülkura koşulları sağlanmadı
+الكسوف القادم|Prochaine éclipse de Soleil|Next solar eclipse|Sonraki Güneş tutulması
+الكسوف القادم (مرئي من موقعك)|Prochaine éclipse de Soleil (visible chez vous)|Next solar eclipse (visible at your location)|Sonraki Güneş tutulması (konumunuzdan görülür)
+أقرب كسوف مرئي من موقعك|Prochaine éclipse de Soleil visible chez vous|Next solar eclipse visible at your location|Konumunuzdan görülecek ilk Güneş tutulması
+الخسوف القادم|Prochaine éclipse de Lune|Next lunar eclipse|Sonraki Ay tutulması
+الخسوف القادم (مرئي من موقعك)|Prochaine éclipse de Lune (visible chez vous)|Next lunar eclipse (visible at your location)|Sonraki Ay tutulması (konumunuzdan görülür)
+أقرب خسوف مرئي من موقعك|Prochaine éclipse de Lune visible chez vous|Next lunar eclipse visible at your location|Konumunuzdan görülecek ilk Ay tutulması
+النوع|Type|Type|Tür
+كسوف جزئي|Éclipse partielle de Soleil|Partial solar eclipse|Kısmi Güneş tutulması
+كسوف كلي|Éclipse totale de Soleil|Total solar eclipse|Tam Güneş tutulması
+كسوف حلقي|Éclipse annulaire de Soleil|Annular solar eclipse|Halkalı Güneş tutulması
+كسوف هجين|Éclipse hybride de Soleil|Hybrid solar eclipse|Hibrit Güneş tutulması
+خسوف كلي|Éclipse totale de Lune|Total lunar eclipse|Tam Ay tutulması
+خسوف جزئي|Éclipse partielle de Lune|Partial lunar eclipse|Kısmi Ay tutulması
+خسوف شبه ظلي|Éclipse de Lune par la pénombre|Penumbral lunar eclipse|Yarı gölge Ay tutulması
+ذروة الكسوف عالميًا|Maximum (mondial)|Greatest eclipse (global)|En büyük tutulma (küresel)
+غاما γ|Gamma γ|Gamma γ|Gama γ
+غير مرئي من موقعك|Invisible depuis chez vous|Not visible from your location|Konumunuzdan görülmez
+بداية الكسوف الجزئي (C1)|Début de l'éclipse partielle (C1)|Partial eclipse begins (C1)|Kısmi tutulma başlangıcı (C1)
+بداية الكلية/الحلقية (C2)|Début totalité/annularité (C2)|Total/annular phase begins (C2)|Tam/halkalı evre başlangıcı (C2)
+ذروة الكسوف|Maximum de l'éclipse|Maximum eclipse|Tutulma maksimumu
+نهاية الكلية/الحلقية (C3)|Fin totalité/annularité (C3)|Total/annular phase ends (C3)|Tam/halkalı evre sonu (C3)
+مدة الكلية/الحلقية|Durée totalité/annularité|Total/annular duration|Tam/halkalı evre süresi
+نهاية الكسوف (C4)|Fin de l'éclipse (C4)|Eclipse ends (C4)|Tutulma sonu (C4)
+مقدار الكسوف|Magnitude|Magnitude|Büyüklük
+نسبة الحجب|Obscuration|Obscuration|Kapanma oranı
+الشمس فوق الأفق، ✗ تحت الأفق|le Soleil est au-dessus de l'horizon, ✗ en dessous|the sun is above the horizon, ✗ below it|güneş ufkun üstünde, ✗ altında
+منتصف الخسوف|Milieu de l'éclipse|Greatest eclipse|Tutulma ortası
+مقدار الظل|Magnitude (ombre)|Umbral magnitude|Gölge büyüklüğü
+مقدار شبه الظل|Magnitude (pénombre)|Penumbral magnitude|Yarı gölge büyüklüğü
+بداية شبه الظل (P1)|Début pénombre (P1)|Penumbral begins (P1)|Yarı gölge başlangıcı (P1)
+بداية الخسوف الجزئي (U1)|Début partielle (U1)|Partial begins (U1)|Kısmi başlangıç (U1)
+بداية الخسوف الكلي (U2)|Début totalité (U2)|Total begins (U2)|Tam başlangıç (U2)
+ذروة الخسوف|Maximum|Maximum|Maksimum
+نهاية الخسوف الكلي (U3)|Fin totalité (U3)|Total ends (U3)|Tam sonu (U3)
+مدة الكلي|Durée totalité|Totality duration|Tam evre süresi
+نهاية الخسوف الجزئي (U4)|Fin partielle (U4)|Partial ends (U4)|Kısmi son (U4)
+مدة الجزئي|Durée partielle|Partial duration|Kısmi evre süresi
+نهاية شبه الظل (P4)|Fin pénombre (P4)|Penumbral ends (P4)|Yarı gölge sonu (P4)
+القمر فوق الأفق، ✗ تحت الأفق|la Lune est au-dessus de l'horizon, ✗ en dessous|the moon is above the horizon, ✗ below it|ay ufkun üstünde, ✗ altında
+الإشعارات|Notifications|Notifications|Bildirimler
+إيقاف|Désactiver|Off|Kapalı
+تفعيل|Activer|On|Açık
+الصلوات الخمس|Les cinq prières|The five prayers|Beş vakit namaz
+اقتراب ميلاد الهلال|Approche de la nouvelle lune|New crescent approaching|Yeni hilal yaklaşıyor
+ليلة استطلاع الهلال|Soirée d'observation du croissant|Crescent survey evening|Hilal gözlem akşamı
+الأعياد والمناسبات الهجرية|Fêtes et occasions hégiriennes|Hijri holidays and occasions|Hicri bayram ve özel günler
+الكسوف والخسوف|Éclipses|Eclipses|Tutulmalar
+التنبيه قبل الصلاة (دقيقة)|Rappel avant la prière (min)|Alert before prayer (min)|Namazdan önce uyarı (dk)
+تصدير التنبيهات إلى تقويم الهاتف (30 يومًا)|Exporter les alertes vers le calendrier du téléphone (30 jours)|Export alerts to the phone calendar (30 days)|Uyarıları telefon takvimine aktar (30 gün)
+تعمل الإشعارات أثناء فتح التطبيق فقط؛ للتنبيه والتطبيق مغلق صدّر الملف إلى تقويم الهاتف وافتحه ليضيف الأحداث مع منبهاتها|Les notifications fonctionnent uniquement quand l'application est ouverte ; pour être alerté application fermée, exportez le fichier vers le calendrier du téléphone et ouvrez-le pour ajouter les événements avec leurs alarmes|Notifications work only while the app is open; to be alerted when it is closed, export the file to the phone calendar and open it to add the events with their alarms|Bildirimler yalnızca uygulama açıkken çalışır; uygulama kapalıyken uyarılmak için dosyayı telefon takvimine aktarıp açın, etkinlikler alarmlarıyla eklenir
+المتصفح لا يدعم الإشعارات|Ce navigateur ne prend pas en charge les notifications|This browser does not support notifications|Bu tarayıcı bildirimleri desteklemiyor
+لم يُمنح إذن الإشعارات: فعّله من إعدادات المتصفح للموقع|Autorisation refusée : activez-la dans les réglages du navigateur pour ce site|Permission not granted: enable it in the browser settings for this site|İzin verilmedi: tarayıcı ayarlarından bu site için etkinleştirin
+غرة رمضان|1er Ramadan|1 Ramadan|Ramazan'ın 1'i
+عيد الفطر|Aïd al-Fitr|Eid al-Fitr|Ramazan Bayramı
+يوم عرفة|Jour d'Arafat|Day of Arafah|Arefe günü
+عيد الأضحى|Aïd al-Adha|Eid al-Adha|Kurban Bayramı
+رأس السنة الهجرية|Nouvel an hégirien|Islamic New Year|Hicri yılbaşı
+عاشوراء|Achoura|Ashura|Aşure
+كسوف الشمس بعد ساعة|Éclipse de Soleil dans une heure|Solar eclipse in one hour|Güneş tutulmasına bir saat
+خسوف القمر بعد ساعة|Éclipse de Lune dans une heure|Lunar eclipse in one hour|Ay tutulmasına bir saat
+الهلال|Croissant|Crescent|Hilal
+استطلاع الهلال الجديد|Observation du nouveau croissant|New crescent survey|Yeni hilal taraması
+الاقتران|Conjonction|Conjunction|Kavuşum
+يبدأ الاستطلاع من أول غروب يبلغ فيه عمر الهلال 15 ساعة و33 دقيقة بعد الاقتران، ويتكرر كل يوم حتى تتحقق الرؤية بشرط حدود دانجون ومعيار عودة (V ≥ 2)، ويكون الفاتح هو اليوم التالي لآخر استطلاع|L'observation commence au premier coucher du soleil où le croissant a au moins 15 h 33 min après la conjonction et se répète chaque jour jusqu'à la visibilité, sous réserve des limites de Danjon et du critère d'Odeh (V ≥ 2) ; le 1er du mois est le lendemain du dernier relevé|The survey starts at the first sunset when the crescent is at least 15 h 33 min old and repeats daily until visibility is possible, subject to Danjon's limits and Odeh's criterion (V ≥ 2); the first day of the month is the day after the last survey|Tarama, hilalin kavuşumdan en az 15 sa 33 dk sonra olduğu ilk gün batımında başlar; Danjon sınırları ve Odeh ölçütü (V ≥ 2) koşuluyla görünürlük mümkün olana dek her gün tekrarlanır; ayın ilk günü son taramadan sonraki gündür
+استطلاع مساء|Soirée d'observation|Evening survey|Akşam taraması
+عند الغروب|Au coucher du soleil|At sunset|Gün batımında
+عند كون الشمس 5° تحت الأفق|Soleil à 5° sous l'horizon|Sun 5° below the horizon|Güneş ufkun 5° altındayken
+المعايير والحكم|Critères et verdict|Criteria and verdict|Ölçütler ve karar
+غروب الشمس|Coucher du soleil|Sunset|Gün batımı
+أفول الهلال|Coucher du croissant|Moonset|Hilalin batışı
+مكث الهلال|Durée de présence du croissant|Moon lag|Hilalin kalış süresi
+عمر الهلال|Âge du croissant|Moon age|Hilalin yaşı
+ارتفاع الهلال|Hauteur du croissant|Moon altitude|Hilalin yüksekliği
+المطال|Élongation|Elongation|Elongasyon
+نسبة إضاءة الهلال|Fraction éclairée|Illuminated fraction|Aydınlık oranı
+سمت الهلال|Azimut du croissant|Moon azimuth|Hilalin azimutu
+جهة الهلال بالنسبة للشمس|Position du croissant par rapport au soleil|Crescent side relative to the sun|Hilalin güneşe göre yönü
+شمال الشمس|au nord du soleil|north of the sun|güneşin kuzeyinde
+جنوب الشمس|au sud du soleil|south of the sun|güneşin güneyinde
+وقت كون الشمس 5° تحت الأفق|Heure où le soleil est à 5° sous l'horizon|Time the sun is 5° below the horizon|Güneşin 5° altında olduğu zaman
+الوقت الأفضل للرؤية (غروب + 4/9 المكث)|Meilleur moment (coucher + 4/9 de la durée)|Best time (sunset + 4/9 of lag)|En iyi zaman (batış + kalışın 4/9'u)
+قوس الرؤية ARCV|Arc de vision ARCV|Arc of vision ARCV|Görüş yayı ARCV
+عرض الهلال W|Largeur du croissant W|Crescent width W|Hilal genişliği W
+معيار يالوب (q)|Critère de Yallop (q)|Yallop criterion (q)|Yallop ölçütü (q)
+معيار عودة (V)|Critère d'Odeh (V)|Odeh criterion (V)|Odeh ölçütü (V)
+الحكم|Verdict|Verdict|Karar
+يُرى بسهولة بالعين المجردة|Facilement visible à l'œil nu|Easily visible to the naked eye|Çıplak gözle kolayca görülür
+يُرى بالعين المجردة في ظروف جوية مثالية|Visible à l'œil nu dans des conditions parfaites|Visible to the naked eye under perfect conditions|Mükemmel koşullarda çıplak gözle görülür
+قد يحتاج معينًا بصريًا لإيجاده ثم يُرى بالعين المجردة|Peut nécessiter un instrument pour le trouver, puis visible à l'œil nu|May need optical aid to find it, then visible to the naked eye|Bulmak için optik yardım gerekebilir, sonra çıplak gözle görülür
+يحتاج معينًا بصريًا لإيجاده|Nécessite un instrument optique pour le trouver|Needs optical aid to find it|Bulmak için optik yardım gerekir
+لا يُرى حتى بالتلسكوب|Invisible même au télescope|Not visible even with a telescope|Teleskopla bile görülmez
+لا يُرى: دون حد دانجون (تصنيف يالوب)|Invisible : sous la limite de Danjon (classe F de Yallop)|Not visible: below the Danjon limit (Yallop class F)|Görülmez: Danjon sınırının altında (Yallop F sınıfı)
+الهلال مرئي بالعين المجردة|Croissant visible à l'œil nu|Crescent visible to the naked eye|Hilal çıplak gözle görülür
+مرئي بالمنظار ويمكن رؤيته بالعين المجردة|Visible aux instruments optiques, possiblement à l'œil nu|Visible with optical aid and possibly to the naked eye|Optik yardımla görülür, çıplak gözle de görülebilir
+مرئي بالمنظار فقط|Visible uniquement avec un instrument optique|Visible with optical aid only|Yalnızca optik yardımla görülür
+لا يُرى حتى بالمنظار|Invisible même avec un instrument optique|Not visible even with optical aid|Optik yardımla bile görülmez
+يغرب القمر قبل الشمس أو معها: لا رؤية|La Lune se couche avant ou avec le soleil : pas de visibilité|The moon sets before or with the sun: no visibility|Ay güneşten önce veya onunla batar: görünürlük yok
+الرؤية ممكنة|Visibilité possible|Visibility possible|Görünürlük mümkün
+الرؤية غير ممكنة: دون حدود دانجون|Visibilité impossible : sous les limites de Danjon|Not visible: below Danjon's limits|Görünürlük mümkün değil: Danjon sınırlarının altında
+الرؤية غير ممكنة: دون معيار عودة|Visibilité impossible : sous le critère d'Odeh|Not visible: below Odeh's criterion|Görünürlük mümkün değil: Odeh ölçütünün altında
+يعني بلوغ أقل هلال سُجّلت رؤيته (دانجون): ارتفاع 5° ومطال 7.7° ومكث 29 دقيقة وعمر 15 ساعة و33 دقيقة|signifie que le plus petit croissant observé (Danjon) est atteint : hauteur 5°, élongation 7.7°, présence 29 min, âge 15 h 33 min|means the smallest crescent ever seen (Danjon) is reached: altitude 5°, elongation 7.7°, lag 29 min, age 15 h 33 min|görülen en küçük hilale ulaşıldığı anlamına gelir (Danjon): yükseklik 5°, elongasyon 7.7°, kalış 29 dk, yaş 15 sa 33 dk
+رؤية أم القرى (مكة المكرمة، UTC+3)|Observation à Oumm al-Qura (La Mecque, UTC+3)|Umm al-Qura survey (Makkah, UTC+3)|Ümmülkura taraması (Mekke, UTC+3)
+أم القرى|Oumm al-Qura|Umm al-Qura|Ümmülkura
+شرطا تقويم أم القرى|Conditions du calendrier d'Oumm al-Qura|Umm al-Qura calendar conditions|Ümmülkura takvimi koşulları
+الاقتران قبل الغروب|Conjonction avant le coucher|Conjunction before sunset|Gün batımından önce kavuşum
+القمر يغرب بعد الشمس|La Lune se couche après le soleil|Moon sets after the sun|Ay güneşten sonra batar
+أول الشهر في تقويم أم القرى|1er du mois (calendrier d'Oumm al-Qura)|First of the month (Umm al-Qura calendar)|Ayın ilk günü (Ümmülkura takvimi)
+الغد هو يوم الفاتح (أول الشهر)|Demain est le 1er du mois|Tomorrow is the first day of the month|Yarın ayın ilk günü
+يعاد الاستطلاع في اليوم التالي|Nouvelle observation le lendemain|Survey again the next day|Ertesi gün yeniden taranır
+الفاتح|Premier jour du mois|First day of the month|Ayın ilk günü
+يوم الفاتح|Jour du 1er|Day of the first|İlk günün adı
+تاريخ الفاتح|Date du 1er|Date of the first|İlk günün tarihi
+الشهر الهجري الجديد|Nouveau mois hégirien|New Hijri month|Yeni Hicri ay
+لم تتحقق إمكانية الرؤية خلال أيام الاستطلاع|La visibilité n'est pas devenue possible durant les jours observés|Visibility did not become possible within the surveyed days|Taranan günlerde görünürlük mümkün olmadı
+القبلة|Qibla|Qibla|Kıble
+اتجاه القبلة|Direction de la qibla|Qibla direction|Kıble yönü
+كيف تتجه إلى القبلة الآن|S'orienter vers la qibla maintenant|Facing the qibla now|Şimdi kıbleye yönelmek
+استقبال الشمس للقبلة|Soleil dans la direction de la qibla|Sun in the qibla direction|Güneş kıble yönünde
+استقبال الظل للقبلة|Ombre dans la direction de la qibla|Shadow in the qibla direction|Gölge kıble yönünde
+تعامد الشمس على الكعبة|Soleil au zénith de la Kaaba|Sun at zenith over the Kaaba|Güneş Kâbe'nin tam tepesinde
+سمت القبلة (من الشمال)|Azimut de la qibla (depuis le nord)|Qibla azimuth (from north)|Kıble azimutu (kuzeyden)
+الجهة|Direction|Direction|Yön
+شمال|Nord|North|Kuzey
+شمال شرق|Nord-est|Northeast|Kuzeydoğu
+شرق|Est|East|Doğu
+جنوب شرق|Sud-est|Southeast|Güneydoğu
+جنوب|Sud|South|Güney
+جنوب غرب|Sud-ouest|Southwest|Güneybatı
+غرب|Ouest|West|Batı
+شمال غرب|Nord-ouest|Northwest|Kuzeybatı
+المسافة إلى الكعبة|Distance jusqu'à la Kaaba|Distance to the Kaaba|Kâbe'ye uzaklık
+كم|km|km|km
+أنت عند الكعبة|Vous êtes à la Kaaba|You are at the Kaaba|Kâbe'desiniz
+سمت الشمس الآن|Azimut du soleil maintenant|Sun azimuth now|Güneşin şimdiki azimutu
+ارتفاع الشمس الآن|Hauteur du soleil maintenant|Sun altitude now|Güneşin şimdiki yüksekliği
+قف مواجهًا الشمس ثم انعطف|Face au soleil, puis tournez de|Face the sun, then turn|Güneşe dönün, sonra şu kadar dönün
+قف وظلّك أمامك ثم انعطف|Ombre devant vous, puis tournez de|Shadow in front of you, then turn|Gölgeniz önünüzde, sonra şu kadar dönün
+يمينًا|à droite|to the right|sağa
+يسارًا|à gauche|to the left|sola
+الشمس تحت الأفق: لا يمكن الاستدلال بالشمس أو الظل، فاستعمل بوصلة على سمت القبلة|Soleil sous l'horizon : impossible de s'orienter avec le soleil ou l'ombre, utilisez une boussole sur l'azimut de la qibla|Sun below the horizon: the sun and shadow can't be used, use a compass at the qibla azimuth|Güneş ufkun altında: güneş ve gölge kullanılamaz, kıble azimutunda pusula kullanın
+وقت الاستقبال|Heure de l'alignement|Alignment time|Hizalanma zamanı
+سمت الشمس (من الشمال)|Azimut du soleil (depuis le nord)|Sun azimuth (from north)|Güneş azimutu (kuzeyden)
+ارتفاع الشمس الظاهري|Hauteur apparente du soleil|Apparent sun altitude|Güneşin görünür yüksekliği
+لا استقبال اليوم|Pas d'alignement aujourd'hui|No alignment today|Bugün hizalanma yok
+يحدث الاستقبال في الليل (الشمس تحت الأفق)|L'alignement a lieu de nuit (soleil sous l'horizon)|The alignment happens at night (sun below the horizon)|Hizalanma geceleyin olur (güneş ufkun altında)
+عند هذا الوقت قف مواجهًا الشمس فتكون القبلة أمامك وظلك خلفك|À ce moment, faites face au soleil : la qibla est devant vous et votre ombre derrière vous|At that moment, face the sun: the qibla is ahead of you and your shadow behind you|O anda güneşe dönün: kıble önünüzde, gölgeniz arkanızda
+عند هذا الوقت قف وظلّك أمامك فتكون القبلة أمامك، أو انصب عودًا عموديًا فيشير ظله إلى القبلة|À ce moment, placez-vous avec l'ombre devant vous : la qibla est devant vous, ou plantez un bâton vertical dont l'ombre indique la qibla|At that moment, stand with your shadow in front of you: the qibla is ahead, or plant a vertical stick whose shadow points to the qibla|O anda gölgeniz önünüzdeyken durun: kıble önünüzdedir, veya dik bir çubuk dikin, gölgesi kıbleyi gösterir
+التاريخ والوقت عندك|Date et heure chez vous|Date and time at your location|Konumunuzdaki tarih ve saat
+بتوقيت مكة (UTC+3)|Heure de La Mecque (UTC+3)|Mecca time (UTC+3)|Mekke saati (UTC+3)
+ارتفاع الشمس عندك|Hauteur du soleil chez vous|Sun altitude at your location|Konumunuzdaki güneş yüksekliği
+الشمس في جهة القبلة تمامًا: اتجه نحوها، وظل أي عمود يشير عكس القبلة|Le soleil est exactement dans la direction de la qibla : faites-lui face, l'ombre de tout poteau pointe à l'opposé|The sun is exactly in the qibla direction: face it, the shadow of any pole points the opposite way|Güneş tam kıble yönünde: ona dönün, her direğin gölgesi ters yönü gösterir
+الوقت ليل عندك: لا يمكن الاستفادة منه|Il fait nuit chez vous : inutilisable|It is night at your location: not usable|Konumunuzda gece: kullanılamaz
+لا تعامد|Aucun passage au zénith|No zenith passage|Tepe geçişi yok
+منزلة الشمس|Mansion lunaire du soleil|Sun's lunar mansion|Güneşin menzili
+درجة الشمس في منزلتها|Degré du soleil dans sa mansion|Sun's degree in its mansion|Güneşin menzildeki derecesi
+منزلة القمر|Mansion lunaire de la Lune|Moon's lunar mansion|Ayın menzili
+درجة القمر في منزلته|Degré de la Lune dans sa mansion|Moon's degree in its mansion|Ayın menzildeki derecesi
+المنازل 28 متساوية (12° 51′ 26″) تبدأ من أول الحمل على فلك البروج|28 mansions égales (12° 51′ 26″) à partir du début du Bélier sur l'écliptique|28 equal mansions (12° 51′ 26″) starting at the beginning of Aries on the ecliptic|28 eşit menzil (12° 51′ 26″), ekliptikte Koç'un başından başlar
+جارٍ تحديد الموقع…|Localisation en cours…|Locating…|Konum alınıyor…
+تم تحديد الموقع تلقائيًا ✓|Position détectée ✓|Location detected ✓|Konum bulundu ✓
+تعذّر تحديد الموقع — فعّل GPS وإذن الموقع للتطبيق أو أدخله يدويًا|Localisation impossible : activez le GPS et l'autorisation, ou saisissez la position|Couldn't locate: enable GPS and location permission, or enter it manually|Konum alınamadı: GPS ve konum iznini açın veya elle girin
+`.split('\n').forEach(l=>{const a=l.split('|');if(a[0])L[a[0]]=a.slice(1)});
+const tt=s=>{if(!s||st.lg=='ar')return s;const m=/^([^\p{L}]*)(.*)$/su.exec(s);return m[1]+((L[m[2]]||[])[LI[st.lg]]||m[2])};
+/* تنسيق */
+const E=s=>st.ar&&st.lg=='ar'?String(s).replace(/\d+(\.\d+)?/g,m=>m.replace(/\d/g,c=>'٠١٢٣٤٥٦٧٨٩'[c]).replace('.','٫')+'\u200e'):s,
+N=s=>`<bdi dir=ltr>${s}</bdi>`,U=(n,u)=>N(n)+' '+tt(u),
+dms=(x,g)=>{const t=Math.round(Math.abs(x)*36000);return(x<0?'−':g?'+':'')+(t/36000|0)+'° '+p2(t%36000/600|0)+'′ '+(t%600/10).toFixed(1).padStart(4,'0')+'″'},
+hms=x=>{const t=Math.round((x%24+24)%24*36000)%864000;return p2(t/36000|0)+'ʰ '+p2(t%36000/600|0)+'ᵐ '+(t%600/10).toFixed(1).padStart(4,'0')+'ˢ'},
+tm=(j,s)=>{if(!(j>0))return'—';const u=s?1:60,t=Math.round((((j+.5+st.tz/24)%1)+1)%1*86400/u)*u%86400;return p2(t/3600|0)+':'+p2(t%3600/60|0)+(s?':'+p2(t%60):'')},
+dur=d=>{const s=Math.round(d*86400);return p2(s/3600|0)+':'+p2(s%3600/60|0)+':'+p2(s%60)},
+dt=j=>new Date((j-2440587.5+st.tz/24)*864e5);
+let G,G2,WD;const mkG=()=>{try{G=new Intl.DateTimeFormat(st.lg+'-u-ca-gregory-nu-latn',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'UTC'});G2=new Intl.DateTimeFormat(st.lg+'-u-ca-gregory-nu-latn',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'});WD=new Intl.DateTimeFormat(st.lg,{weekday:'long',timeZone:'UTC'})}catch(e){G=G2=WD={format:()=>'—'}}};mkG();
+/* الفلك */
+const JD=(y,m,d,h)=>{if(m<3){y--;m+=12}const A=Math.floor(y/100);return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+h/24+2-A+Math.floor(A/4)-1524.5},
+nut=T=>{const o=125.04452-1934.136261*T,l=280.4665+36000.7698*T;return{dpsi:-.004778*sn(o)-.000366*sn(2*l),eps:23.4392911-.0130042*T+.002556*cs(o)+.000158*cs(2*l)}},
+eq=(l,b,e)=>({ra:n360(dg(at(sn(l)*cs(e)-Math.tan(b*P)*sn(e),cs(l)))),dec:dg(as(sn(b)*cs(e)+cs(b)*sn(e)*sn(l)))}),
+fin=o=>{const n=nut(o.T),p=dg(as(6378.14/o.km));return Object.assign(o,eq(o.lon,o.lat,n.eps),{dpsi:n.dpsi,eps:n.eps,par:p,sd:o.r?0.26656/o.r:0.2725*p})},
+sun=j=>{const T=(j+DT-2451545)/36525,L=280.46646+36000.76983*T,M=357.52911+35999.05029*T,e=.016708634-4.2037e-5*T,
+C=(1.914602-.004817*T)*sn(M)+(.019993-1.01e-4*T)*sn(2*M)+2.89e-4*sn(3*M),r=1.000001018*(1-e*e)/(1+e*cs(M+C));
+return fin({lon:n360(L+C-.00569-.00478*sn(125.04-1934.136*T)),lat:0,km:r*149597870.7,r,L,T})},
+MT=[[0,0,1,0,6288774,-20905355],[2,0,-1,0,1274027,-3699111],[2,0,0,0,658314,-2955968],[0,0,2,0,213618,-569925],[0,1,0,0,-185116,48888],[0,0,0,2,-114332,-3149],[2,0,-2,0,58793,246158],[2,-1,-1,0,57066,-152138],[2,0,1,0,53322,-170733],[2,-1,0,0,45758,-204586],[0,1,-1,0,-40923,-129620],[1,0,0,0,-34720,108743],[0,1,1,0,-30383,104755],[2,0,0,-2,15327,10321],[0,0,1,2,-12528,0],[0,0,1,-2,10980,79661],[4,0,-1,0,10675,-34782],[0,0,3,0,10034,-23210],[4,0,-2,0,8548,-21636],[2,1,-1,0,-7888,24208],[2,1,0,0,-6766,30824],[1,0,-1,0,-5163,-8379],[1,1,0,0,4987,-16675],[2,-1,1,0,4036,-12831],[2,0,2,0,3994,-10445],[4,0,0,0,3861,-11650],[2,0,-3,0,3665,14403],[0,1,-2,0,-2689,-7003]],
+BT=[[0,0,0,1,5128122],[0,0,1,1,280602],[0,0,1,-1,277693],[2,0,0,-1,173237],[2,0,-1,1,55413],[2,0,-1,-1,46271],[2,0,0,1,32573],[0,0,2,1,17198],[2,0,1,-1,9266],[0,0,2,-1,8822],[2,-1,0,-1,8216],[2,0,-2,-1,4324],[2,0,1,1,4200],[2,1,0,-1,-3359]],
+moon=j=>{const T=(j+DT-2451545)/36525,Lp=218.3164477+481267.88123421*T,D=297.8501921+445267.1114034*T,M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T,F=93.272095+483202.0175233*T,
+E1=1-.002516*T,A1=119.75+131.849*T,A2=53.09+479264.29*T;
+let l=3958*sn(A1)+1962*sn(Lp-F)+318*sn(A2),r=0,b=0;
+for(const t of MT){const a=t[0]*D+t[1]*M+t[2]*Mp+t[3]*F,f=t[1]?E1:1;l+=t[4]*f*sn(a);r+=t[5]*f*cs(a)}
+for(const t of BT){const a=t[0]*D+t[1]*M+t[2]*Mp+t[3]*F;b+=t[4]*(t[1]?E1:1)*sn(a)}
+return fin({lon:n360(Lp+l/1e6+nut(T).dpsi),lat:b/1e6,km:385000.56+r/1e3,T})},
+gmst=j=>n360(280.46061837+360.98564736629*(j-2451545)+3.87933e-4*((j-2451545)/36525)**2),
+rf=h=>h<-1?0:1.02/Math.tan((h+10.3/(h+5.11))*P)/60;
+function hz(b,j){const n=nut((j-2451545)/36525),H=n180(gmst(j)+n.dpsi*cs(n.eps)+st.lon-b.ra),p=st.lat,
+al=dg(as(sn(p)*sn(b.dec)+cs(p)*cs(b.dec)*cs(H))),az=n360(dg(at(sn(H),cs(H)*sn(p)-Math.tan(b.dec*P)*cs(p)))+180);
+return{H,alt:al,az,top:al-b.par*cs(al)}}
+function roots(f,a,b,n){const o=[];let t0=a,f0=f(a);for(let i=1;i<=n;i++){const t1=a+(b-a)*i/n,f1=f(t1);
+if((f0<0)!==(f1<0)){let lo=t0,hi=t1,fl=f0;for(let k=0;k<24;k++){const m=(lo+hi)/2,fm=f(m);if((fm<0)===(fl<0)){lo=m;fl=fm}else hi=m}o.push({t:(lo+hi)/2,up:f1>=0})}
+t0=t1;f0=f1}return o}
+function ev(f,j0){const rs=roots(j=>{const b=f(j);return hz(b,j).top+.5667+b.sd},j0,j0+1,144),
+tr=roots(j=>hz(f(j),j).H,j0,j0+1,144).filter(r=>r.up&&Math.abs(hz(f(r.t),r.t).H)<1);
+return{rise:(rs.find(r=>r.up)||{}).t,set:(rs.find(r=>!r.up)||{}).t,tr:(tr[0]||{}).t}}
+const elf=j=>n180(moon(j).lon-sun(j).lon),conj=t=>{for(let i=0;i<9;i++)t-=elf(t)/12.19;return t};
+const HM={umalqura:'أم القرى (السعودية)',civil:'مدني جدولي (أصل الجمعة)',tbla:'فلكي جدولي (أصل الخميس)',obs:'حساب الهلال: اقتران قبل الغروب + مكث القمر'},HF={},dc={},
+hf=c=>HF[c]||(HF[c]=new Intl.DateTimeFormat(st.lg+'-u-ca-islamic-'+c+'-nu-latn',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'})),
+pc=x=>conj(x-n360(elf(x))/12.19),
+d1=c=>{const k=c.toFixed(3)+'|'+st.lat+'|'+st.lon+'|'+st.tz;if(dc[k])return dc[k];const N=Math.floor(c+.5+st.tz/24),j0=N-.5-st.tz/24,e=ev(sun,j0),m=ev(moon,j0);return dc[k]=N+(e.set&&c<e.set&&m.set>e.set?1:2)},
+hij=(j,se,m)=>{m=m||(pro()?st.hm:'umalqura');const k=pro()?(st.hs&&se.set&&j>se.set?1:0)+st.ho:0;try{if(m!='obs')return hf(m).format(dt(j+k));
+let N=Math.floor(j+.5+st.tz/24)+k,c=pc(j),a=d1(c);if(a>N){c=pc(c-1);a=d1(c)}
+const p=hf('civil').formatToParts(new Date((a+14-2440587.5)*864e5)),g=t=>p.find(x=>x.type==t).value;return(N-a+1)+' '+g('month')+' '+g('year')+' '+({ar:'هـ',tr:'H'}[st.lg]||'AH')}catch(e){return'—'}};
+/* واجهة */
+const row=(l,v,r,c)=>`<div class="r ${c||''}"><b>${E(tt(l))}</b><span${r?' class=rt':''}>${E(v)}</span></div>`,
+w=(t,b)=>`<div class=w><h3>${tt(t)}</h3>${b}</div>`,
+Z=['الحمل','الثور','الجوزاء','السرطان','الأسد','العذراء','الميزان','العقرب','القوس','الجدي','الدلو','الحوت'],
+PH=['المحاق (الاقتران)','هلال متزايد','التربيع الأول','أحدب متزايد','البدر','أحدب متناقص','التربيع الأخير','هلال متناقص'],
+zd=l=>{const i=Math.floor(l/30);return tt(Z[i])+' '+N(dms(l-30*i))},
+msvg=(k,wx)=>{const x=Math.abs(1-2*k)*44,rt=wx===(st.lat>=0);return`<svg viewBox="0 0 100 100" width=96 height=96><circle cx=50 cy=50 r=44 fill=#131c40 stroke=#e3b25b88 /><path d="M50 6A44 44 0 0 ${rt?1:0} 50 94A${x} 44 0 0 ${rt===(k<.5)?0:1} 50 6Z" fill=#f4e7c3 /></svg>`},
+jdNow=()=>{if(st.now||!st.d)return Date.now()/864e5+2440587.5;const[y,m,d]=st.d.split('-').map(Number);return JD(y,m,d,st.hh+st.mm/60+st.ss/3600)-st.tz/24},
+ecl=(b,x)=>w('🌐 الإحداثيات البروجية',row('الطول البروجي λ',dms(b.lon))+row('العرض البروجي β',dms(b.lat,1))+row('البرج',zd(b.lon),1)+x),
+equ=(b,h)=>w('🧭 الإحداثيات الاستوائية',row('المطلع المستقيم α',hms(b.ra/15))+row('المطلع المستقيم α (درجات)',dms(b.ra))+row('الميل δ',dms(b.dec,1))+row('الزاوية الساعية H',hms(n360(h.H)/15))),
+hor=h=>w('📐 الإحداثيات الأفقية',row('الارتفاع الحقيقي h',dms(h.top,1))+row('الارتفاع الظاهري (مع الانكسار)',dms(h.top+rf(h.top),1))+row('البعد السمتي z',dms(90-h.top))+row('السمت A (من الشمال)',dms(h.az))),
+rst=e=>w('🌅 الشروق والزوال والغروب',row('الشروق',tm(e.rise,1))+row('الزوال',tm(e.tr,1))+row('الغروب',tm(e.set,1)));
+const GN=60,shd=(h,se)=>{const ln=L=>L<100?U(L.toFixed(1),'سم'):U((L/100).toFixed(2),'م'),a=h.top+rf(h.top),tz=se&&se.tr,ht=tz?hz(sun(tz),tz):0,
+tx=tz?mnf(t=>-hz(sun(t),t).top,tz-.02,tz+.02):0,hx=tx?hz(sun(tx),tx):0,ax=hx?hx.top+rf(hx.top):0,tn=tz?mnf(t=>hz(sun(t),t).top,tz+.35,tz+.65):0,an=tn?hz(sun(tn),tn).top:0,
+zz=ax?GN/Math.tan(ax*P):0,z0=zz<.5?0:zz,
+zr=ht?row('أقصى ارتفاع للشمس (الزوال)',tm(tx,1)+' · '+dms(ax,1))+row('الارتفاع الحقيقي عند الزوال (بلا انكسار)',dms(90-Math.abs(st.lat-sun(tx).dec),1))+row('سمت الشمس عند الزوال',Math.abs(hx.top)>89.9?'—':dms(hx.az))+
+(ax<=0?row('ظل الزوال (قامة 60 سم)',tt('لا ظل: الشمس تحت الأفق عند الزوال'),1):(z0?row('ظل الزوال (قامة 60 سم)',ln(z0),1)+row('سمت ظل الزوال (من الشمال)',dms(n360(ht.az+180+1e-6))):row('ظل الزوال (قامة 60 سم)',tt('لا ظل: الشمس عمودية'),1))+row('ظل العصر (الجمهور: ظل الزوال + القامة)',ln(z0+GN),1)+row('ظل العصر (الحنفية: ظل الزوال + ضعف القامة)',ln(z0+2*GN),1))+
+row('أدنى ارتفاع للشمس (منتصف الليل الشمسي)',tm(tn,1)+' · '+dms(an,1))+row('مدى الارتفاع (الأقصى − الأدنى)',dms(hx.top-an)):'';
+return w('📏 الظل',(a>0?row('طول الظل (قامة 60 سم)',ln(GN/Math.tan(a*P)),1)+row('سمت الظل (من الشمال)',dms(n360(h.az+180))):`<div class=r style="justify-content:center;text-align:center;color:var(--m)">${tt(h.H>0?'لا ظل — غربت الشمس':'لا ظل — لم تشرق الشمس بعد')}</div>`)+zr)};
+const KA={lat:21.422487,lon:39.826206},
+MA=['الشرطان','البطين','الثريا','الدبران','الهقعة','الهنعة','الذراع','النثرة','الطرف','الجبهة','الزبرة','الصرفة','العواء','السماك','الغفر','الزبانى','الإكليل','القلب','الشولة','النعائم','البلدة','سعد الذابح','سعد بلع','سعد السعود','سعد الأخبية','الفرغ المقدم','الفرغ المؤخر','بطن الحوت'],
+ML="Al-Sharatan|Al-Butayn|Ath-Thurayya|Ad-Dabaran|Al-Haq'ah|Al-Han'ah|Adh-Dhira'|An-Nathrah|At-Tarf|Al-Jabhah|Az-Zubrah|As-Sarfah|Al-'Awwa|As-Simak|Al-Ghafr|Az-Zubana|Al-Iklil|Al-Qalb|Ash-Shawlah|An-Na'a'im|Al-Baldah|Sa'd adh-Dhabih|Sa'd Bula'|Sa'd as-Su'ud|Sa'd al-Akhbiyah|Al-Fargh al-Muqaddam|Al-Fargh al-Mu'akhkhar|Batn al-Hut".split('|'),
+mn=l=>{const w=360/28,i=Math.floor(l/w);return[(st.lg=='ar'?MA[i]:ML[i])+' ('+(i+1)+')',l-i*w]},
+nt=t=>`<div class=r style="color:var(--m);font-size:12px">${E(tt(t))}</div>`,
+cnt=t=>`<div class=r style="justify-content:center;text-align:center;color:var(--m)">${E(tt(t))}</div>`,
+mnr=(l,s)=>{const[n,d]=mn(l);return row(s?'منزلة الشمس':'منزلة القمر',n,1)+row(s?'درجة الشمس في منزلتها':'درجة القمر في منزلته',dms(d))+nt('المنازل 28 متساوية (12° 51′ 26″) تبدأ من أول الحمل على فلك البروج')},
+WP=['شمالية شرقية','شرقية شمالية','شرقية جنوبية','جنوبية شرقية','جنوبية غربية','غربية جنوبية','غربية شمالية','شمالية غربية'],
+WQ=['من الشمال نحو الشرق','من الشرق نحو الشمال','من الشرق نحو الجنوب','من الجنوب نحو الشرق','من الجنوب نحو الغرب','من الغرب نحو الجنوب','من الغرب نحو الشمال','من الشمال نحو الغرب'],
+lenS=a=>{const L=GN/Math.tan(a*P);return L<100?U(L.toFixed(1),'سم'):U((L/100).toFixed(2),'م')},
+tmk=x=>{const t=Math.round((((x+.625)%1)+1)%1*86400)%86400;return p2(t/3600|0)+':'+p2(t%3600/60|0)+':'+p2(t%60)},
+aec={},zc={};
+function zen(j){const k=Math.floor(j);if(zc[k])return zc[k];
+const Hk=x=>{const n=nut((x-2451545)/36525);return n180(gmst(x)+n.dpsi*cs(n.eps)+KA.lon-sun(x).ra)};
+return zc[k]=roots(x=>sun(x).dec-KA.lat,j-1,j+370,371).map(r=>{let b;for(let i=-1;i<=1;i++){const z=roots(Hk,r.t+i-.5,r.t+i+.5,48).filter(q=>q.up&&Math.abs(Hk(q.t))<1)[0];if(z){const e=Math.abs(sun(z.t).dec-KA.lat);if(!b||e<b.e)b={t:z.t,e}}}return b&&b.t}).filter(t=>t>j).slice(0,2)}
+function qib(j,j0,hs,cf){
+const d=KA.lon-st.lon,la=st.lat,Q=n360(dg(at(sn(d),cs(la)*Math.tan(KA.lat*P)-sn(la)*cs(d)))),
+dist=ac(sn(la)*sn(KA.lat)+cs(la)*cs(KA.lat)*cs(d))*P*6371.0088;
+if(dist<.1)return w('🕋 اتجاه القبلة',cnt('أنت عند الكعبة'));
+const a=hs.top+rf(hs.top),tn=x=>{const D=n180(x);return dms(Math.abs(D))+' '+tt(D>=0?'يمينًا':'يسارًا')},
+ae=o=>{const key=Math.floor(j0)+'|'+st.lat+'|'+st.lon+'|'+st.tz+'|'+o,g=x=>n180(hz(sun(x),x).az-o);return aec[key]||(aec[key]=roots(g,j0,j0+1,288).filter(r=>Math.abs(g(r.t))<1).map(r=>{const h=hz(sun(r.t),r.t);return{t:r.t,az:h.az,a:h.top+rf(h.top)}}))},
+bl=(o,n)=>{const v=ae(o);return v.length?v.map(e=>row('وقت الاستقبال',tm(e.t,1))+(e.a>0?row('سمت الشمس (من الشمال)',dms(e.az))+row('ارتفاع الشمس الظاهري',dms(e.a,1))+row('سمت الظل (من الشمال)',dms(n360(e.az+180)))+row('طول الظل (قامة 60 سم)',lenS(e.a),1)+nt(n):cnt('يحدث الاستقبال في الليل (الشمس تحت الأفق)'))).join(''):cnt('لا استقبال اليوم')},
+zr=pro()?zen(j):[];
+return w('🕋 اتجاه القبلة',row('سمت القبلة (من الشمال)',dms(Q))+row('جهة القبلة',tt(WP[Math.floor(Q/45)%8]),1)+row('انحراف القبلة',dms(Math.abs(Q-[0,90,90,180,180,270,270,360][Math.floor(Q/45)%8]))+' '+tt(WQ[Math.floor(Q/45)%8]),1)+row('المسافة إلى الكعبة',U(Math.round(dist),'كم'),1))+
+w('🧍 كيف تتجه إلى القبلة الآن',a>0?row('سمت الشمس الآن',dms(hs.az))+row('ارتفاع الشمس الآن',dms(a,1))+row('قف مواجهًا الشمس ثم انعطف',tn(Q-hs.az),1)+row('قف وظلّك أمامك ثم انعطف',tn(Q-hs.az-180),1):cnt('الشمس تحت الأفق: لا يمكن الاستدلال بالشمس أو الظل، فاستعمل بوصلة على سمت القبلة'))
++(pro()?(w('☀️ استقبال الشمس للقبلة',bl(Q,'عند هذا الوقت قف مواجهًا الشمس فتكون القبلة أمامك وظلك خلفك'))+
+w('📏 استقبال الظل للقبلة',bl(n360(Q+180),'عند هذا الوقت قف وظلّك أمامك فتكون القبلة أمامك، أو انصب عودًا عموديًا فيشير ظله إلى القبلة'))+
+w('🌞 تعامد الشمس على الكعبة',zr.length?zr.map(t=>{const h=hz(sun(t),t),b=h.top+rf(h.top);return row('التاريخ والوقت عندك',cf(t),1)+row('بتوقيت مكة (UTC+3)',tmk(t))+(b>0?row('ارتفاع الشمس عندك',dms(b,1))+row('سمت الشمس (من الشمال)',dms(h.az))+nt('الشمس في جهة القبلة تمامًا: اتجه نحوها، وظل أي عمود يشير عكس القبلة'):cnt('الوقت ليل عندك: لا يمكن الاستفادة منه'))}).join(''):cnt('لا تعامد'))+qst(j,Q,hs)):(LK[6]=1,''))}
+const YM=['يُرى بسهولة بالعين المجردة','يُرى بالعين المجردة في ظروف جوية مثالية','قد يحتاج معينًا بصريًا لإيجاده ثم يُرى بالعين المجردة','يحتاج معينًا بصريًا لإيجاده','لا يُرى حتى بالتلسكوب','لا يُرى: دون حد دانجون (تصنيف يالوب)'],
+OM=['الهلال مرئي بالعين المجردة','مرئي بالمنظار ويمكن رؤيته بالعين المجردة','مرئي بالمنظار فقط','لا يُرى حتى بالمنظار'],
+hd=t=>`<div class=r style="font-weight:700;color:var(--a)">${E(tt(t))}</div>`,
+dzs=g=>tt(g.dz>0?'شمال الشمس':'جنوب الشمس')+' '+dms(Math.abs(g.dz)),
+hmn=x=>{try{return new Intl.DateTimeFormat(st.lg+'-u-ca-islamic-'+(st.hm=='obs'?'civil':st.hm)+'-nu-latn',{month:'long',year:'numeric',timeZone:'UTC'}).format(dt(x))}catch(e){return'—'}},
+cr={};
+const DJ={a:5,e:7.7,l:29,t:15+33/60},mk=b=>b?' ✓':' ✗',
+mset=x=>roots(y=>{const b=moon(y);return hz(b,y).top+.5667+b.sd},x-.3,x+.5,120).find(r=>!r.up),
+ups=t=>{const q=sun(t);return hz(q,t).top+.5667+q.sd>0},upm=t=>{const q=moon(t);return hz(q,t).top+.5667+q.sd>0},
+cfx=x=>G.format(dt(x))+' '+tt('الساعة')+' '+N(tm(x,1));
+function cres(c,u){const key=(u?'U':'')+Math.round(c*144)+'|'+st.lat+'|'+st.lon+'|'+st.tz;if(cr[key])return cr[key];
+const el=x=>{const a=sun(x),b=moon(x);return ac(cs(b.lat)*cs(b.lon-a.lon))},
+st2=(x,ms)=>{const h=hz(moon(x),x);return{a:h.top,az:h.az,e:el(x),dz:n180(h.az-hz(sun(x),x).az),age:x-c,lag:ms?(ms-x)*1440:null}},
+out=[],d0=Math.floor(c+.5+st.tz/24);
+for(let N=d0;N<d0+7&&out.length<5;N++){const ss=ev(sun,N-.5-st.tz/24).set;if(!ss||(!u&&ss<c+15/24))continue;
+const mr=mset(ss),ms=mr&&mr.t,r5=roots(x=>hz(sun(x),x).alt+5,ss,ss+.12,60).find(r=>!r.up),t5=r5&&r5.t,g=st2(ss,ms),d=t5?st2(t5,ms):null,
+o={N,ss,ms,t5,g,d,uq:c<ss&&ms>ss,bt:ms?-hz(sun(ms),ms).alt:null,
+dj:!!d&&d.a>=DJ.a&&d.e>=DJ.e&&d.lag!=null&&d.lag>=DJ.l&&d.age*24>=DJ.t,tl:!!d&&d.e>=6.4&&d.lag!=null&&d.lag>=21&&d.age*24>=13+14/60};
+if(ms>ss){const tb=ss+4/9*(ms-ss),hm=hz(moon(tb),tb),h2=hz(sun(tb),tb),m=moon(tb),W=m.sd*60*(1+sn(hm.top)*sn(m.par))*(1-cs(el(tb))),f=-.1018*W**3+.7319*W**2-6.3226*W,av=hm.top-h2.top;
+Object.assign(o,{tb,arcv:av,W,q:(av-11.8371-f)/10,V:av-7.1651-f})}
+o.ok=u?o.uq:o.dj;out.push(o);if(o.ok)break}
+return cr[key]=out}
+function hsv(j,c1,c2,cf,m){
+const Nt=Math.floor(j+.5+st.tz/24);let c=c1,S=cres(c1,m),z=S[S.length-1];
+if(!(z&&z.ok&&z.N+1>=Nt)){c=c2;S=cres(c2,m);z=S[S.length-1]}
+const ls=(g,k,s)=>row('مكث الهلال',g.lag==null?'—':U(g.lag.toFixed(1),'دقيقة')+(k?mk(g.lag>=DJ.l):''),1)+row('عمر الهلال',(g.age<0?'−':'')+dur(Math.abs(g.age))+(k?mk(g.age*24>=DJ.t):''))+row('ارتفاع الهلال',dms(g.a,1)+(k?mk(g.a>=DJ.a):''))+row('المطال',dms(g.e)+(k?mk(g.e>=DJ.e):''))+(s?row('جهة الهلال بالنسبة للشمس',dzs(g),1):''),
+t5=(o,h)=>hd(h)+row('وقت كون الشمس 5° تحت الأفق',tm(o.t5,1))+(o.d?ls(o.d,1,!m):'')+nt('✓ يعني بلوغ أقل هلال سُجّلت رؤيته بالعين المجردة (1859–2005): ارتفاع 5° ومطال 7.7° ومكث 29 دقيقة وعمر 15 ساعة و33 دقيقة'),
+vd=o=>tt(o.ok?'الرؤية ممكنة بالعين المجردة':m&&!o.uq?'الرؤية غير ممكنة: لم يتحقق شرطا أم القرى':!m&&o.tl?'الرؤية ممكنة بالمرقب فقط: لم تبلغ حدود العين المجردة':'الرؤية غير ممكنة: دون أقل هلال سُجّلت رؤيته'),
+vr=o=>row('الحكم',vd(o),1)+cnt(o.ok?'الغد هو يوم الفاتح (أول الشهر)':'يعاد الاستطلاع في اليوم التالي'),
+day=o=>{const g=o.g;
+if(m)return hd('شرطا تقويم أم القرى')+row('غروب الشمس',tm(o.ss,1))+row('أفول القمر',tm(o.ms,1))+row('الاقتران قبل الغروب',tt(c<o.ss?'نعم':'لا'),1)+row('القمر يغرب بعد الشمس',tt(o.ms>o.ss?'نعم':'لا'),1)+row('الحكم',tt(o.uq?'تحقق شرطا أم القرى':'لم يتحقق شرطا أم القرى'),1)+cnt(o.ok?'الغد هو يوم الفاتح (أول الشهر)':'يعاد الاستطلاع في اليوم التالي')+t5(o,'للمقارنة فقط: عند كون الشمس 5° تحت الأفق')+row('مقارنة بأقل هلال شوهد',mk(o.dj),1);
+let k=hd('عند الغروب')+row('غروب الشمس',tm(o.ss,1))+row('أفول الهلال',tm(o.ms,1))+ls(g,0,1)+row('نسبة إضاءة الهلال',((1-cs(g.e))/2*100).toFixed(2)+'%')+row('سمت الهلال',dms(g.az))+t5(o,'عند كون الشمس 5° تحت الأفق')+
+row('حدود الرؤية بالمرقب (عمر 13 س 14 د، مكث 21 د، مطال 6.4°)',mk(o.tl),1)+hd('المعايير والحكم')+
+row('المعيار البابلي (عمر > 24 ساعة ومكث > 48 دقيقة)',mk(g.age*24>24&&g.lag!=null&&g.lag>48),1)+
+row('معيار البتاني (انخفاض الشمس عند أفول الهلال ≥ 8°)',o.bt==null?'—':dms(o.bt)+mk(o.bt>=8),1)+row('معيار دانجون (المطال ≥ 7°)',dms(g.e)+mk(g.e>=7),1);
+if(o.tb){const yi=o.q>.216?0:o.q>-.014?1:o.q>-.16?2:o.q>-.232?3:o.q>-.293?4:5,oi=o.V>=5.65?0:o.V>=2?1:o.V>=-.96?2:3;
+k+=row('الوقت الأفضل للرؤية (غروب + 4/9 المكث)',tm(o.tb,1))+row('قوس الرؤية ARCV',dms(o.arcv,1))+row('عرض الهلال W',o.W.toFixed(3)+'′')+row('معيار يالوب (q)',o.q.toFixed(3)+' — '+'ABCDEF'[yi])+nt(YM[yi])+row('معيار عودة (V)',o.V.toFixed(2)+' — '+'ABCD'[oi])+nt(OM[oi])}
+else k+=cnt('يغرب القمر قبل الشمس أو معها: لا رؤية');
+return k+vr(o)},
+x=z&&z.ok?z.N+1:0;
+return w(m?'🕋 رؤية أم القرى (مكة المكرمة، UTC+3)':'🌒 استطلاع الهلال الجديد',row('الاقتران',cf(c),1)+(m?'':nt('يبدأ الاستطلاع من أول غروب يبلغ فيه عمر الهلال 15 ساعة بعد الاقتران، ويتكرر كل يوم حتى تتحقق حدود الرؤية المسجلة (أقل هلال شوهد) عند كون الشمس 5° تحت الأفق، ويكون الفاتح هو اليوم التالي لآخر استطلاع')))+
+S.map(o=>w('🌆 '+tt('استطلاع مساء')+' '+G.format(dt(o.ss)),day(o))).join('')+
+w('📅 '+tt('الفاتح')+(m?' — '+tt('أم القرى'):''),(x?row('يوم الفاتح',WD.format(dt(x-st.tz/24)))+row('تاريخ الفاتح',G2.format(dt(x-st.tz/24)))+row('الشهر الهجري الجديد',hmn(x+10-st.tz/24),1):cnt('لم تتحقق إمكانية الرؤية خلال أيام الاستطلاع')))}
+function hil(j,c1,c2,cf){let h=hsv(j,c1,c2,cf,0);
+if(Math.abs(st.lat-KA.lat)<.25&&Math.abs(st.lon-KA.lon)<.25)return h;
+const o={lat:st.lat,lon:st.lon,tz:st.tz};st.lat=KA.lat;st.lon=KA.lon;st.tz=3;
+try{h+=hsv(j,c1,c2,cf,1)}finally{Object.assign(st,o)}return h}
+/* الكسوف والخسوف */
+const RS=696000,RE=6378.14,RM=.2725076*RE,ecc={},
+vc=b=>[b.km*cs(b.dec)*cs(b.ra),b.km*cs(b.dec)*sn(b.ra),b.km*sn(b.dec)],
+sb=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]],dt3=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2],nm3=a=>Math.hypot(a[0],a[1],a[2]),
+cr3=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],
+mnf=(f,a,b)=>{for(let i=0;i<40;i++){const p=a+(b-a)/3,q=b-(b-a)/3;if(f(p)<f(q))b=q;else a=p}return(a+b)/2},
+ob=j=>{const n=nut((j-2451545)/36525),th=gmst(j)+n.dpsi*cs(n.eps)+st.lon,u=dg(Math.atan(.99664719*Math.tan(st.lat*P)));return[RE*cs(u)*cs(th),RE*cs(u)*sn(th),RE*.99664719*sn(u)]},
+sl=j=>{const O=ob(j),S=sb(vc(sun(j)),O),M=sb(vc(moon(j)),O);return{d:dg(at(nm3(cr3(S,M)),dt3(S,M))),R:dg(as(RS/nm3(S))),r:dg(as(RM/nm3(M)))}},
+lens=(d,R,r)=>{if(d>=R+r)return 0;if(d<=Math.abs(R-r))return r>=R?1:r*r/(R*R);return(r*r*Math.acos((d*d+r*r-R*R)/(2*d*r))+R*R*Math.acos((d*d+R*R-r*r)/(2*d*R))-.5*Math.sqrt((-d+r+R)*(d+r-R)*(d-r+R)*(d+r+R)))/(Math.PI*R*R)},
+gs=t=>{const a=vc(sun(t)),b=vc(moon(t)),v=sb(b,a),D=nm3(v),u=v.map(x=>x/D),s1=(RS+RM)/D,s2=(RS-RM)/D,tp=-dt3(b,u),g=nm3(cr3(b,u))/RE,l1=(RM+tp*s1/Math.sqrt(1-s1*s1))/RE,da=RM*Math.sqrt(1-s2*s2)/s2;
+return{g,ty:g>=1+l1?0:g>=.9972?'p':da>=tp?'t':da>tp-RE*Math.sqrt(1-g*g)?'h':'a'}},
+TS={p:'كسوف جزئي',t:'كسوف كلي',a:'كسوف حلقي',h:'كسوف هجين'},TL=o=>o.um>=1?'خسوف كلي':o.um>0?'خسوف جزئي':'خسوف شبه ظلي',
+fmo=t=>{for(let i=0;i<9;i++)t-=n180(elf(t)-180)/12.19;return t},
+ldf=t=>{const a=sun(t),b=moon(t),sp=8.794/3600/a.r;return{D:ac(-cs(b.lat)*cs(b.lon-a.lon)),Ru:1.02*(b.par+sp-a.sd),Rp:1.02*(b.par+sp+a.sd),s:b.sd}};
+function lsol(tg){const n=150,a=tg-.25,f=t=>{const s=sl(t);return s.d-s.R-s.r};let b=null;
+for(let i=0;i<=n;i++){const t=a+.5*i/n,d=sl(t).d;if(!b||d<b.d)b={t,d}}
+const tm0=mnf(t=>sl(t).d,b.t-.004,b.t+.004),s=sl(tm0);if(s.d>=s.R+s.r)return null;
+const c1=roots(f,a,tm0,60).find(r=>!r.up),c4=roots(f,tm0,a+.5,60).find(r=>r.up),cen=s.d<Math.abs(s.R-s.r),g=t=>{const q=sl(t);return q.d-Math.abs(q.R-q.r)},
+c2=cen?roots(g,a,tm0,60).find(r=>!r.up):0,c3=cen?roots(g,tm0,a+.5,60).find(r=>r.up):0;
+return{c1:c1&&c1.t,c2:c2&&c2.t,mx:tm0,c3:c3&&c3.t,c4:c4&&c4.t,mag:(s.R+s.r-s.d)/(2*s.R),ob:lens(s.d,s.R,s.r)}}
+function sols(j,c1,c2){const key='s'+Math.floor(j)+'|'+st.lat+'|'+st.lon+'|'+st.tz;if(ecc[key])return ecc[key];
+let c=j-c1<.4?c1:c2,gl=null,lo=null;
+for(let i=0;i<110&&!(gl&&lo);i++,c=conj(c+29.53059)){const tg=mnf(t=>gs(t).g,c-.3,c+.3),q=gs(tg);if(!q.ty||tg+.15<j)continue;
+const e={tg,ty:q.ty,g:q.g,l:lsol(tg)};if(!gl)gl=e;if(!lo&&e.l&&(e.l.c4||tg)>j&&[e.l.c1,e.l.mx,e.l.c4].some(t=>t&&ups(t)))lo=e}
+return ecc[key]={gl,lo}}
+function llun(tg){const f=k=>t=>{const q=ldf(t);return q.D-(k==0?q.Rp+q.s:k==1?q.Ru+q.s:q.Ru-q.s)},q=ldf(tg),o={tg,pm:(q.Rp+q.s-q.D)/(2*q.s),um:(q.Ru+q.s-q.D)/(2*q.s)};
+if(o.pm<=0)return null;
+[0,1,2].forEach(k=>{if(k==1&&o.um<=0||k==2&&o.um<1)return;const a=roots(f(k),tg-.2,tg,60).find(r=>!r.up),b=roots(f(k),tg,tg+.2,60).find(r=>r.up);o['a'+k]=a&&a.t;o['b'+k]=b&&b.t});return o}
+function luns(j){const key='l'+Math.floor(j)+'|'+st.lat+'|'+st.lon+'|'+st.tz;if(ecc[key])return ecc[key];
+let c=fmo(j+n180(180-n360(moon(j).lon-sun(j).lon))/12.19),gl=null,lo=null;
+for(let i=0;i<80&&!(gl&&lo);i++,c=fmo(c+29.53059)){const o=llun(mnf(t=>ldf(t).D,c-.2,c+.2));if(!o||(o.b0||o.tg+.15)<j)continue;if(!gl)gl=o;
+if(!lo&&[o.a0,o.a1,o.a2,o.tg,o.b2,o.b1,o.b0].some(t=>t&&upm(t)))lo=o}
+return ecc[key]={gl,lo}}
+function eclS(j,c1,c2){try{const{gl,lo}=sols(j,c1,c2),
+blk=(e,ttl)=>{const l=e.l,v=l&&[l.c1,l.mx,l.c4].some(t=>t&&ups(t)),m=t=>t?tm(t,1)+mk(ups(t)):'—',
+k=row('النوع',tt(TS[e.ty]),1)+row('ذروة الكسوف عالميًا',cfx(e.tg),1)+row('غاما γ',e.g.toFixed(4));
+if(!v)return w(ttl,k+cnt('غير مرئي من موقعك')+nt('حساب تقريبي: دقة الأوقات نحو دقيقة، ولا يُعتمد عليه قرب حافة مسار الكسوف الكلي أو الحلقي'));
+return w(ttl,k+row('بداية الكسوف الجزئي (C1)',m(l.c1))+(l.c2?row('بداية الكلية/الحلقية (C2)',m(l.c2)):'')+row('ذروة الكسوف',m(l.mx))+(l.c3?row('نهاية الكلية/الحلقية (C3)',m(l.c3))+row('مدة الكلية/الحلقية',dur(l.c3-l.c2)):'')+row('نهاية الكسوف (C4)',m(l.c4))+row('مقدار الكسوف',l.mag.toFixed(4))+row('نسبة الحجب',(l.ob*100).toFixed(2)+'%')+nt('✓ الشمس فوق الأفق، ✗ تحت الأفق')+nt('حساب تقريبي: دقة الأوقات نحو دقيقة، ولا يُعتمد عليه قرب حافة مسار الكسوف الكلي أو الحلقي'))};
+return gl?(lo===gl?blk(gl,'🌑 الكسوف القادم (مرئي من موقعك)'):blk(gl,'🌑 الكسوف القادم')+(lo?blk(lo,'🌑 أقرب كسوف مرئي من موقعك'):'')):''}catch(e){return''}}
+function eclL(j){try{const{gl,lo}=luns(j),
+blk=(o,ttl)=>{const m=t=>t?tm(t,1)+mk(upm(t)):'—',v=[o.a0,o.a1,o.a2,o.tg,o.b2,o.b1,o.b0].some(t=>t&&upm(t));
+return w(ttl,row('النوع',tt(TL(o)),1)+row('منتصف الخسوف',cfx(o.tg),1)+row('مقدار الظل',o.um.toFixed(4))+row('مقدار شبه الظل',o.pm.toFixed(4))+
+row('بداية شبه الظل (P1)',m(o.a0))+(o.a1?row('بداية الخسوف الجزئي (U1)',m(o.a1)):'')+(o.a2?row('بداية الخسوف الكلي (U2)',m(o.a2)):'')+row('ذروة الخسوف',m(o.tg))+
+(o.b2?row('نهاية الخسوف الكلي (U3)',m(o.b2))+row('مدة الكلي',dur(o.b2-o.a2)):'')+(o.b1?row('نهاية الخسوف الجزئي (U4)',m(o.b1))+row('مدة الجزئي',dur(o.b1-o.a1)):'')+row('نهاية شبه الظل (P4)',m(o.b0))+(v?'':cnt('غير مرئي من موقعك'))+nt('✓ القمر فوق الأفق، ✗ تحت الأفق'))};
+return gl?(lo===gl?blk(gl,'🌘 الخسوف القادم (مرئي من موقعك)'):blk(gl,'🌘 الخسوف القادم')+(lo?blk(lo,'🌘 أقرب خسوف مرئي من موقعك'):'')):''}catch(e){return''}}
+
+/* الإشعارات */
+const jn=()=>Date.now()/864e5+2440587.5,NK=['الفجر','الظهر','العصر','المغرب','العشاء'],
+OC={'9-1':'غرة رمضان','10-1':'عيد الفطر','12-9':'يوم عرفة','12-10':'عيد الأضحى','1-1':'رأس السنة الهجرية','1-10':'عاشوراء'},
+NC={p:'الصلوات الخمس',n:'اقتراب ميلاد الهلال',s:'ليلة استطلاع الهلال',h:'الأعياد والمناسبات الهجرية',z:'تعامد الشمس على الكعبة',q:'استقبال القبلة (الشمس والظل والنجم المختار)',e:'الكسوف والخسوف'},
+ad=(t,i)=>t?t+(pro()?st.tk[i]:0)/1440:t,
+LD=c=>{const[n,u]=st.ld[c]||[0,'m'];return n*(u=='m'?1/1440:u=='h'?1/24:1)},
+ago=c=>{const[n,u]=st.ld[c]||[0,'m'],L=st.lg;if(L=='ar'){const F={m:['دقيقة','دقيقتين','دقائق','دقيقة'],h:['ساعة','ساعتين','ساعات','ساعة'],d:['يوم','يومين','أيام','يومًا']}[u],i=n==1?0:n==2?1:n<=10?2:3;return'بعد '+(n<3?F[i]:n+' '+F[i])}
+const W={fr:{m:'min',h:'h',d:'j'},en:{m:'min',h:'h',d:'d'},tr:{m:'dk',h:'sa',d:'gün'}}[L][u];return L=='tr'?n+' '+W+' sonra':(L=='fr'?'dans ':'in ')+n+' '+W},
+pt=b=>{const se=ev(sun,b),sa=x=>hz(sun(x),x).alt,ff=(f,u)=>{const r=roots(f,b,b+1,144).find(x=>x.up===u);return r&&r.t},dh=se.tr,mg=se.set,
+ah=dh?dg(Math.atan(1/(1+Math.tan(Math.abs(st.lat-sun(dh).dec)*P)))):0;return[ad(ff(x=>sa(x)+18,true),0),ad(dh,1),ad(dh?ff(x=>sa(x)-ah,false):0,2),ad(mg,3),ad(mg&&mg+.0625,4)]};
+function evl(days,far){const j=jn(),L=dt(j),b0=JD(L.getUTCFullYear(),L.getUTCMonth()+1,L.getUTCDate(),0)-st.tz/24,n=pro()?st.nf:{p:st.nf.p},o=[],D2=far||days,
+e0=n360(moon(j).lon-sun(j).lon),c1=conj(j-e0/12.19),c2=conj(j+(360-e0)/12.19),
+add=(t,k,a,b,c)=>{if(t&&t>j-.02&&t<j+D2+1)o.push({t,k,a:a.replace(/<[^>]*>/g,''),b:b.replace(/<[^>]*>/g,''),ld:LD(c),lt:ago(c)})};
+if(n.p)for(let d=0;d<days;d++){const b=b0+d;pt(b).forEach((t,i)=>add(t,'p'+i+'|'+Math.floor(b),'🕌 '+tt(NK[i]),tm(t),'p'))}
+const cj=[c1,c2];while(cj[cj.length-1]<j+D2)cj.push(conj(cj[cj.length-1]+29.53));
+if(n.n)cj.forEach(c=>add(c,'n'+Math.round(c*24),'🌑 '+tt('ميلاد الهلال (الاقتران)'),cfx(c),'n'));
+if(n.s)cj.forEach(c=>cres(c).forEach(o2=>add(o2.ss,'s'+o2.N,'🌆 '+tt('ليلة استطلاع الهلال'),tt('غروب الشمس')+' '+tm(o2.ss,1),'s')));
+if(n.h){const hp=new Intl.DateTimeFormat('en-u-ca-islamic-'+(st.hm=='obs'?'umalqura':st.hm)+'-nu-latn',{day:'numeric',month:'numeric',timeZone:'UTC'});
+for(let d=0;d<D2;d++){const b=b0+d,p=hp.formatToParts(dt(b+.5)),k=p.find(x=>x.type=='month').value+'-'+p.find(x=>x.type=='day').value;if(OC[k])add(b+.25,'h'+k+'|'+Math.floor(b),'🌙 '+tt(OC[k]),G.format(dt(b+.5)),'h')}}
+if(n.z)zen(j).forEach(t=>add(t,'z'+Math.round(t*24),'🕋 '+tt('تعامد الشمس على الكعبة'),cfx(t)+' — '+tt('بتوقيت مكة (UTC+3)')+' '+tmk(t),'z'));
+if(n.e){const a=sols(j,c1,c2).lo,b=luns(j).lo;
+if(a&&a.l&&a.l.c1)add(a.l.c1,'es'+Math.round(a.tg*24),'🌑 '+tt('بداية كسوف الشمس'),tt(TS[a.ty])+' — '+cfx(a.l.mx),'e');
+if(b&&b.a0)add(b.a0,'el'+Math.round(b.tg*24),'🌘 '+tt('بداية خسوف القمر'),tt(TL(b))+' — '+cfx(b.tg),'e')}
+if(n.q){const Q=QZ(),s0=STR[st.sx]||STR[0];
+for(let d=0;d<days;d++){const b=b0+d;
+[[Q,'qs','☀️ ','استقبال الشمس للقبلة'],[n360(Q+180),'qd','📏 ','استقبال الظل للقبلة']].forEach(([tg,kk,em,ti])=>{const fn=x=>n180(hz(sun(x),x).az-tg);
+roots(fn,b,b+1,288).filter(r=>Math.abs(fn(r.t))<1).forEach(r=>{const h=hz(sun(r.t),r.t),a=h.top+rf(h.top);if(a>0)add(r.t,kk+Math.round(r.t*24),em+tt(ti),tm(r.t,1)+' — '+tt('ارتفاع الشمس الظاهري')+' '+dms(a,1),'q')})});
+const fs=x=>n180(hz(spc(s0,x),x).az-Q);
+roots(fs,b,b+1,288).filter(r=>Math.abs(fs(r.t))<1).forEach(r=>{const h=hz(spc(s0,r.t),r.t),a=h.top+rf(h.top);if(a>5&&hz(sun(r.t),r.t).top<-6)add(r.t,'qn'+Math.round(r.t*24),'⭐ '+tt('استقبال النجم للقبلة')+': '+snm(s0),tm(r.t,1)+' — '+tt('الارتفاع الظاهري (مع الانكسار)')+' '+dms(a,1),'q')})}}
+return o.sort((a,b)=>a.t-b.t)}
+let evK=0,evV=[];
+const evg=()=>{const k=Math.floor(jn()*24);if(k!=evK){evK=k;try{evV=evl(8)}catch(e){evV=[]}}return evV},
+snd=(e,adv)=>{const a=adv?e.a+' — '+e.lt:e.a,o={body:e.b,icon:'icon-192.png',tag:e.k+(adv?'a':'t'),vibrate:[200,100,200]};
+if(navigator.serviceWorker)navigator.serviceWorker.ready.then(r=>r.showNotification(a,o)).catch(()=>{try{new Notification(a,o)}catch(x){}});else try{new Notification(a,o)}catch(x){}},
+nfk=()=>{if(!st.nf.on||!('Notification'in window)||Notification.permission!='granted')return;const j=jn();let f={};try{f=JSON.parse(localStorage.getItem('astroN')||'{}')}catch(x){}
+evg().forEach(e=>[[e.t-e.ld,'a',e.ld>0],[e.t,'t',1]].forEach(([t,x,ok])=>{const k=e.k+x;if(ok&&t<=j&&t>j-.02&&!f[k]){f[k]=j;snd(e,x=='a')}}));
+Object.keys(f).forEach(k=>{if(f[k]<j-3)delete f[k]});try{localStorage.setItem('astroN',JSON.stringify(f))}catch(x){}},
+nfm=t=>{$('#nfm').textContent=tt(t)},
+tki=()=>{$('#tkb').innerHTML=NK.map((n,i)=>`<div class=f><label>${tt(n)}</label><button data-t=${i} data-d=-1>−</button><input readonly value="${st.tk[i]>0?'+':''}${st.tk[i]}"><button data-t=${i} data-d=1>+</button></div>`).join('');$('#dzv').value=st.dz},
+nfi=()=>{$('#nfc').innerHTML=Object.keys(NC).filter(k=>pro()||k=='p').map(k=>`<button data-k=${k}${st.nf[k]?' class=on':''}>${tt(NC[k])}</button>`).join('');
+$('#nfd').innerHTML=Object.keys(NC).filter(k=>pro()||k=='p').map(c=>{const[n,u]=st.ld[c];return`<div class=f><label>${tt(NC[c])}</label><button data-c=${c} data-d=-1>−</button><input readonly value=${n}><button data-c=${c} data-d=1>+</button><button data-c=${c} data-u=1>${tt({m:'دقيقة',h:'ساعة',d:'يوم'}[u])}</button></div>`}).join('');
+document.querySelectorAll('#nfo button').forEach(b=>b.classList.toggle('on',(b.dataset.v=='1')==!!st.nf.on))},
+icx=()=>{const e=evl(30,400),f=t=>new Date((t-2440587.5)*864e5).toISOString().replace(/[-:]/g,'').slice(0,15)+'Z',q=s=>String(s).replace(/[\\;,]/g,'\\$&').replace(/\n/g,'\\n'),
+al=(a,m)=>'BEGIN:VALARM\r\nACTION:DISPLAY\r\nDESCRIPTION:'+q(a)+'\r\nTRIGGER:'+m+'\r\nEND:VALARM\r\n',
+s='BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Falaki//AR\r\n'+e.map(x=>'BEGIN:VEVENT\r\nUID:'+x.k+'@falaki\r\nDTSTAMP:'+f(jn())+'\r\nDTSTART:'+f(x.t)+'\r\nDTEND:'+f(x.t+5/1440)+'\r\nSUMMARY:'+q(x.a)+'\r\nDESCRIPTION:'+q(x.b)+'\r\n'+al(x.a,'PT0S')+(x.ld>0?al(x.a+' — '+x.lt,'-PT'+Math.max(1,Math.round(x.ld*1440))+'M'):'')+'END:VEVENT\r\n').join('')+'END:VCALENDAR\r\n',
+a=document.createElement('a');a.href=URL.createObjectURL(new Blob([s],{type:'text/calendar'}));a.download='falaki.ics';document.body.appendChild(a);a.click();a.remove()};
+const SDAT=`الشعرى اليمانية|Sirius (α Canis Majoris)|06 45 08.9|-16 42 58|-1.46|8.6|A1V
+سهيل|Canopus (α Carinae)|06 23 57.1|-52 41 44|-0.74|310|A9II
+رجل القنطورس|Rigil Kentaurus (α Centauri)|14 39 36.5|-60 50 02|-0.01|4.4|G2V+K1V
+السماك الرامح|Arcturus (α Boötis)|14 15 39.7|+19 10 57|-0.05|37|K1.5III
+النسر الواقع|Vega (α Lyrae)|18 36 56.3|+38 47 01|0.03|25|A0V
+العيّوق|Capella (α Aurigae)|05 16 41.4|+45 59 53|0.08|43|G8III
+رجل الجبار|Rigel (β Orionis)|05 14 32.3|-08 12 06|0.13|860|B8Ia
+الشعرى الشامية|Procyon (α Canis Minoris)|07 39 18.1|+05 13 30|0.34|11.5|F5IV
+آخر النهر|Achernar (α Eridani)|01 37 42.8|-57 14 12|0.46|139|B3V
+منكب الجوزاء|Betelgeuse (α Orionis)|05 55 10.3|+07 24 25|0.42|550|M1Ia
+هدار|Hadar (β Centauri)|14 03 49.4|-60 22 23|0.61|390|B1III
+النسر الطائر|Altair (α Aquilae)|19 50 47.0|+08 52 06|0.76|17|A7V
+أكروكس|Acrux (α Crucis)|12 26 35.9|-63 05 57|0.76|320|B0.5IV
+الدبران|Aldebaran (α Tauri)|04 35 55.2|+16 30 33|0.86|65|K5III|4
+قلب العقرب|Antares (α Scorpii)|16 29 24.5|-26 25 55|0.96|550|M1.5Iab|18
+السماك الأعزل|Spica (α Virginis)|13 25 11.6|-11 09 41|0.97|250|B1III|14
+رأس التوأم المؤخر (بولكس)|Pollux (β Geminorum)|07 45 18.9|+28 01 34|1.14|34|K0III|7
+فم الحوت|Fomalhaut (α Piscis Austrini)|22 57 39.0|-29 37 20|1.16|25|A3V
+ذنب الدجاجة|Deneb (α Cygni)|20 41 25.9|+45 16 49|1.25|2600|A2Ia
+ميموزا|Mimosa (β Crucis)|12 47 43.3|-59 41 19|1.25|280|B0.5III
+قلب الأسد|Regulus (α Leonis)|10 08 22.3|+11 58 02|1.36|79|B8IV
+عذارى|Adhara (ε Canis Majoris)|06 58 37.5|-28 58 20|1.50|430|B2Iab
+رأس التوأم المقدم (كاستور)|Castor (α Geminorum)|07 34 35.9|+31 53 18|1.58|51|A1V
+الشولة|Shaula (λ Scorpii)|17 33 36.5|-37 06 14|1.62|570|B2IV|19
+جاكروكس|Gacrux (γ Crucis)|12 31 09.9|-57 06 48|1.64|88|M3.5III
+بيلاتريكس|Bellatrix (γ Orionis)|05 25 07.9|+06 20 59|1.64|250|B2III
+النطح|Elnath (β Tauri)|05 26 17.5|+28 36 27|1.65|130|B7III
+ميابلاسيدوس|Miaplacidus (β Carinae)|09 13 12.0|-69 43 02|1.67|110|A1III
+النظم|Alnilam (ε Orionis)|05 36 12.8|-01 12 07|1.69|2000|B0Ia
+النير|Alnair (α Gruis)|22 08 14.0|-46 57 40|1.74|101|B6V
+النطاق|Alnitak (ζ Orionis)|05 40 45.5|-01 56 34|1.77|1260|O9.5Ib
+أليوث|Alioth (ε Ursae Majoris)|12 54 01.7|+55 57 35|1.76|83|A1III
+ظهر الدب (دبّة)|Dubhe (α Ursae Majoris)|11 03 43.7|+61 45 03|1.79|123|K0III
+ميرفاك|Mirfak (α Persei)|03 24 19.4|+49 51 40|1.79|510|F5Ib
+وزن|Wezen (δ Canis Majoris)|07 08 23.5|-26 23 36|1.83|1800|F8Ia
+سرجاس|Sargas (θ Scorpii)|17 37 19.1|-42 59 52|1.87|270|F0II
+كاوس أوستراليس|Kaus Australis (ε Sagittarii)|18 24 10.3|-34 23 05|1.85|143|B9.5III
+قائد بنات نعش|Alkaid (η Ursae Majoris)|13 47 32.4|+49 18 48|1.86|104|B3V
+منكالينان|Menkalinan (β Aurigae)|05 59 31.7|+44 56 51|1.90|82|A2IV
+أتريا|Atria (α Trianguli Australis)|16 48 39.9|-69 01 40|1.92|415|K2IIb
+الهنعة|Alhena (γ Geminorum)|06 37 42.7|+16 23 57|1.93|105|A0IV|6
+الطاووس|Peacock (α Pavonis)|20 25 38.9|-56 44 06|1.94|183|B2IV
+المرزم|Mirzam (β Canis Majoris)|06 22 42.0|-17 57 21|1.98|500|B1II
+الفرد (قلب الشجاع)|Alphard (α Hydrae)|09 27 35.2|-08 39 31|1.98|177|K3II
+النجم القطبي (الجدي)|Polaris (α Ursae Minoris)|02 31 49.1|+89 15 51|1.98|433|F7Ib
+رأس الحمل|Hamal (α Arietis)|02 07 10.4|+23 27 45|2.00|66|K2III
+الضفدع الثاني|Diphda (β Ceti)|00 43 35.4|-17 59 12|2.04|96|K0III
+النعائم (نونكي)|Nunki (σ Sagittarii)|18 55 15.9|-26 17 48|2.05|228|B2V|20
+منكنت|Menkent (θ Centauri)|14 06 41.0|-36 22 12|2.06|59|K0III
+الفرغ المؤخر (سرة الفرس)|Alpheratz (α Andromedae)|00 08 23.3|+29 05 26|2.06|97|B8IV|27
+بطن الحوت (ميراك)|Mirach (β Andromedae)|01 09 43.9|+35 37 14|2.05|197|M0III|28
+سيف الجبار|Saiph (κ Orionis)|05 47 45.4|-09 40 11|2.06|650|B0.5Ia
+كوكب|Kochab (β Ursae Minoris)|14 50 42.3|+74 09 20|2.08|130|K4III
+رأس الحواء|Rasalhague (α Ophiuchi)|17 34 56.1|+12 33 36|2.08|49|A5III
+رأس الغول|Algol (β Persei)|03 08 10.1|+40 57 20|2.12|90|B8V
+الجبهة|Algieba (γ Leonis)|10 19 58.4|+19 50 30|2.08|130|K0III|10
+الصرفة (ذنب الأسد)|Denebola (β Leonis)|11 49 03.6|+14 34 19|2.14|36|A3V|12
+الزبرة|Zosma (δ Leonis)|11 14 06.5|+20 31 25|2.56|58|A4V|11
+الفكة|Alphecca (α Coronae Borealis)|15 34 41.3|+26 42 53|2.23|75|A0V
+مزار|Mizar (ζ Ursae Majoris)|13 23 55.5|+54 55 31|2.23|83|A2V
+صدر الدجاجة|Sadr (γ Cygni)|20 22 13.7|+40 15 24|2.23|1800|F8Ib
+منتكا|Mintaka (δ Orionis)|05 32 00.4|-00 17 57|2.23|1200|O9.5II
+جبهة العقرب (دشوبا)|Dschubba (δ Scorpii)|16 00 20.0|-22 37 18|2.29|400|B0.3IV
+الإكليل (عقرب)|Acrab (β Scorpii)|16 05 26.2|-19 48 19|2.62|530|B1V|17
+الزبانى|Zubenelgenubi (α Librae)|14 50 52.7|-16 02 30|2.75|77|A3IV|16
+الشرطان|Sheratan (β Arietis)|01 54 38.4|+20 48 29|2.64|60|A5V|1
+البطين|Botein (δ Arietis)|03 11 37.7|+19 43 42|4.35|170|K2III|2
+الثريا (ألسيون)|Alcyone (η Tauri) — Pleiades|03 47 29.1|+24 06 19|2.87|440|B7III|3
+الهقعة|Meissa (λ Orionis)|05 35 08.3|+09 56 03|3.54|1100|O8III|5
+النثرة (عنقود المعلف)|Praesepe (M44, Cancer)|08 40 24.0|+19 40 00|3.1|590|Open cluster|8
+الطرف|Alterf (λ Leonis)|09 31 13.3|+22 58 52|4.31|330|K5III|9
+العواء|Zavijava (β Virginis)|11 50 41.7|+01 45 53|3.61|36|F9V|13
+الغفر|Syrma (ι Virginis)|14 16 00.9|-06 00 02|4.08|75|F7III|15
+البلدة|Albaldah (π Sagittarii)|19 02 36.7|-21 01 25|2.89|440|F2II|21
+سعد الذابح|Dabih (β Capricorni)|20 21 00.7|-14 46 53|3.08|330|K0II|22
+سعد بلع|Albali (ε Aquarii)|20 47 40.5|-09 29 45|3.77|205|A1V|23
+سعد السعود|Sadalsuud (β Aquarii)|21 31 33.5|-05 34 16|2.91|540|G0Ib|24
+سعد الأخبية|Sadachbia (γ Aquarii)|22 21 39.4|-01 23 14|3.84|164|A0V|25
+الفرغ المقدم (مرقب)|Markab (α Pegasi)|23 04 45.7|+15 12 19|2.49|133|B9III|26`,
+STR=SDAT.trim().split('\n').map(l=>{const a=l.split('|'),r=a[2].split(' ').map(Number),d=a[3].split(' ').map(Number);return{ar:a[0],la:a[1],ra:(r[0]+r[1]/60+r[2]/3600)*15,de:(a[3][0]=='-'?-1:1)*(Math.abs(d[0])+d[1]/60+d[2]/3600),v:+a[4],ly:+a[5],sp:a[6],mn:+(a[7]||0)}}),
+spc=(s,j)=>{const T=(j-2451545)/36525,z=(2306.2181*T+.30188*T*T+.017998*T**3)/3600,zz=(2306.2181*T+1.09468*T*T+.018203*T**3)/3600,th=(2004.3109*T-.42665*T*T-.041833*T**3)/3600,
+a=cs(s.de)*sn(s.ra+z),b=cs(th)*cs(s.de)*cs(s.ra+z)-sn(th)*sn(s.de),c=sn(th)*cs(s.de)*cs(s.ra+z)+cs(th)*sn(s.de);return{ra:n360(dg(at(a,b))+zz),dec:dg(as(c)),par:0,sd:0}},
+mnn=i=>(st.lg=='ar'?MA[i]:ML[i])+' ('+(i+1)+')',snm=s=>st.lg=='ar'?s.ar:s.la;
+function stl(){$('#sts').innerHTML=STR.map((s,i)=>`<option value=${i}>${snm(s)}${s.mn?' ☾'+s.mn:''}</option>`).join('');$('#sts').value=st.sx}
+function stc(j,j0,hs){try{const s=STR[st.sx]||STR[0],b=spc(s,j),h=hz(b,j),a=h.top+rf(h.top),e=ev(x=>spc(s,x),j0),dk=hs.top<-6,
+L2=STR.map(x=>{const q=hz(spc(x,j),j);return{x,az:q.az,a:q.top+rf(q.top)}}).filter(o=>o.a>5).sort((p,q)=>p.x.v-q.x.v).slice(0,10);
+return w('⭐ '+snm(s),row('الاسم',snm(s),1)+row('التسمية العلمية',s.la)+row('القدر الظاهري',s.v.toFixed(2))+row('البعد',U(s.ly,'سنة ضوئية'),1)+row('الطيف',s.sp)+(s.mn?row('منزلة من منازل القمر',mnn(s.mn-1),1):''))+
+w('🧭 الإحداثيات الاستوائية',row('المطلع المستقيم α',hms(b.ra/15))+row('المطلع المستقيم α (درجات)',dms(b.ra))+row('الميل δ',dms(b.dec,1))+row('الزاوية الساعية H',hms(n360(h.H)/15)))+
+w('📐 الإحداثيات الأفقية',row('الارتفاع الظاهري (مع الانكسار)',dms(a,1))+row('السمت A (من الشمال)',dms(h.az))+row('الحالة الآن',tt(a<=0?'تحت الأفق':dk?'فوق الأفق ويمكن رؤيته':'فوق الأفق لكن السماء مضيئة'),1))+
+w('🌅 الشروق والزوال والغروب',e.rise||e.set?row('الشروق',tm(e.rise,1))+row('الزوال',tm(e.tr,1))+row('الغروب',tm(e.set,1))+(e.rise&&e.set?row('مدة الظهور فوق الأفق',dur(((e.set-e.rise)%1+1)%1)):''):row('الزوال',tm(e.tr,1))+cnt(a>0||hz(spc(s,e.tr||j),e.tr||j).top>0?'نجم دائم الظهور في موقعك':'نجم لا يطلع في موقعك'))+
+w('🌟 أسطع النجوم فوق الأفق الآن',(dk?'':cnt('الشمس فوق الأفق: النجوم غير مرئية الآن'))+L2.map(o=>row(snm(o.x)+' ('+o.x.v.toFixed(1)+')',dms(o.az)+' / '+dms(o.a,1))).join('')+nt('القيمة: السمت / الارتفاع')+nt('إحداثيات النجوم لعام 2000 مع تصحيح المبادرة؛ دقتها نحو دقيقتين قوسيتين'))}catch(e){return''}}
+function qst(j,Q,hs){try{const T0='🌟 الاستدلال بالنجوم على القبلة';if(hs.top>-6)return w(T0,cnt('الشمس فوق الأفق أو الشفق: النجوم غير ظاهرة الآن'));
+const tn=x=>{const D=n180(x);return dms(Math.abs(D))+' '+tt(D>=0?'يمينًا':'يسارًا')},P0=STR.find(s=>s.la.startsWith('Polaris')),q0=hz(spc(P0,j),j),
+L=STR.filter(s=>s.v<=2.6).map(s=>{const q=hz(spc(s,j),j);return{s,az:q.az,a:q.top+rf(q.top)}}).filter(o=>o.a>8&&o.a<80).sort((p,q)=>Math.abs(n180(p.az-Q))-Math.abs(n180(q.az-Q))).slice(0,2);
+let k=st.lat>=5?row('ارتفاع النجم القطبي (الشمال الحقيقي)',dms(q0.top+rf(q0.top),1))+row('قف مواجهًا النجم القطبي ثم انعطف',tn(Q),1):'';
+k+=L.length&&Math.abs(n180(L[0].az-Q))<30?L.map(o=>row(snm(o.s)+' ('+o.s.v.toFixed(1)+')',dms(o.az)+' / '+dms(o.a,1))+row('قف مواجهًا هذا النجم ثم انعطف',tn(Q-o.az),1)).join(''):cnt('لا نجم لامع قرب سمت القبلة الآن');
+return w(T0,k)}catch(e){return''}}
+
+const QZ=()=>{const d=KA.lon-st.lon,la=st.lat;return n360(dg(at(sn(d),cs(la)*Math.tan(KA.lat*P)-sn(la)*cs(d))))},
+ingc={},apc={},TAGI={0:'اعتدال مارس',3:'انقلاب يونيو',6:'اعتدال سبتمبر',9:'انقلاب ديسمبر'};
+const eqx=(Y,k)=>{const y=(Y-2000)/1000,C=[[2451623.80984,365242.37404,.05169,-.00411,-.00057],[2451716.56767,365241.62603,.00325,.00888,-.00030],[2451810.21715,365242.01767,-.11575,.00337,.00078],[2451900.05952,365242.74049,-.06223,-.00823,.00032]][k],
+J0=C[0]+C[1]*y+C[2]*y*y+C[3]*y**3+C[4]*y**4,T=(J0-2451545)/36525,W=35999.373*T-2.47,dl=1+.0334*cs(W)+.0007*cs(2*W),
+A=[485,203,199,182,156,136,77,74,70,58,52,50,45,44,29,18,17,16,14,12,12,12,9,8],B=[324.96,337.23,342.08,27.85,73.14,171.52,222.54,296.72,243.58,119.81,297.17,21.02,247.54,325.15,60.93,155.12,288.79,198.04,199.76,95.39,287.11,320.81,227.73,15.45],
+Cc=[1934.136,32964.467,20.186,445267.112,45036.886,22518.443,65928.934,3034.906,9037.513,33718.147,150.678,2281.226,29929.562,31555.956,4443.417,67555.328,4562.452,62894.029,31436.921,14577.848,31931.756,34777.259,1222.114,16859.074];
+let S=0;for(let i=0;i<24;i++)S+=A[i]*cs(B[i]+Cc[i]*T);return J0+.00001*S/dl};
+function ing(Y){const key=Y+'|'+st.tz;if(ingc[key])return ingc[key];const lo=t=>sun(t).lon,
+A=[[Y-1,3],[Y,0],[Y,1],[Y,2],[Y,3]].map(([y,k])=>{const t=eqx(y,k)-DT;return{t,d:n180(k*90-lo(t))}}),out=[];
+for(let m=0;m<12;m++){if(m%3==0){out.push({k:m,t:A[m/3+1].t});continue}
+const p=m>9?0:Math.floor(m/3)+1,a=A[p],b=A[p+1],f=x=>n180(lo(x)+a.d+(b.d-a.d)*(x-a.t)/(b.t-a.t)-30*m);let u=a.t,v=b.t;
+for(let i=0;i<40;i++){const h=(u+v)/2;if(f(h)<0)u=h;else v=h}out.push({k:m,t:(u+v)/2})}
+out.sort((p,q)=>p.t-q.t);return ingc[key]=out.filter(e=>dt(e.t).getUTCFullYear()==Y)}
+function ingW(j){try{const Y=dt(j).getUTCFullYear();return w('♈ رؤوس البروج (دخول الشمس في كل برج)',ing(Y).map(e=>row((st.lg=='ar'?'رأس ':'')+tt(Z[e.k])+(TAGI[e.k]?' — '+tt(TAGI[e.k]):''),cfx(e.t),1)).join('')+nt('التواريخ حسب فلك البروج المداري وبتوقيتك المحلي؛ الاعتدالان والانقلابان دقتها نحو دقيقة وبقية الرؤوس نحو 3 دقائق'))}catch(e){return''}}
+function aps(j){const key=Math.floor(j*2);if(apc[key])return apc[key];const f=t=>moon(t).km,a0=j-31,n=700,v=[],pe=[],ap=[];for(let i=0;i<=n;i++)v.push(f(a0+i*.25));
+for(let i=1;i<n;i++){const t=a0+i*.25;if(v[i]<v[i-1]&&v[i]<=v[i+1]){const x=mnf(f,t-.3,t+.3);pe.push({t:x,km:f(x)})}else if(v[i]>v[i-1]&&v[i]>=v[i+1]){const x=mnf(y=>-f(y),t-.3,t+.3);ap.push({t:x,km:f(x)})}}
+return apc[key]={pe,ap}}
+function apsW(j){try{const{pe,ap}=aps(j),pick=L=>{const i=L.findIndex(e=>e.t>=j);return L.slice(Math.max(0,i-1),i+2)},
+rw=e=>row((e.t<j?tt('السابق')+': ':'')+cfx(e.t),U(Math.round(e.km),'كم')+' — '+(2*dg(as(RM/e.km))*60).toFixed(2)+'′',1)+row('الطول البروجي λ',dms(moon(e.t).lon)+' — '+tt(Z[Math.floor(moon(e.t).lon/30)])+' '+dms(moon(e.t).lon%30),1);
+return w('🌙 الأوج والحضيض',hd('الحضيض (أقرب نقطة من الأرض)')+pick(pe).map(rw).join('')+hd('الأوج (أبعد نقطة عن الأرض)')+pick(ap).map(rw).join('')+nt('المسافة من مركز الأرض إلى مركز القمر، والقطر الظاهري بالدقائق القوسية؛ دقة الأوقات نحو 10 دقائق'))}catch(e){return''}}
+
+function render(){
+LK={};
+const j=jdNow(),L=dt(j),j0=JD(L.getUTCFullYear(),L.getUTCMonth()+1,L.getUTCDate(),0)-st.tz/24,
+su=sun(j),mo=moon(j),hs=hz(su,j),hm=hz(mo,j),se=ev(sun,j0),me=ev(moon,j0);
+$('#o0').innerHTML=`<div class=clk>${E(tm(j,1))}</div><div class=dy>${E(G.format(L))}</div><div class=hj>${E(hij(j,se))}</div>`;
+if(pro())$('#hc').innerHTML=Object.keys(HM).map(k=>row(HM[k],hij(j,se,k),1,k==st.hm?'nx':'')).join('');
+/* الصلوات */
+const sa=x=>hz(sun(x),x).alt,ff=(f,u)=>{const r=roots(f,j0,j0+1,144).find(x=>x.up===u);return r&&r.t},
+fj0=ff(x=>sa(x)+18,true),dh0=se.tr,mg0=se.set,
+ah=dh0?dg(Math.atan(1/(1+Math.tan(Math.abs(st.lat-sun(dh0).dec)*P)))):0,
+asr0=dh0?ff(x=>sa(x)-ah,false):0,is0=mg0&&mg0+.0625,fj=ad(fj0,0),dh=ad(dh0,1),asr=ad(asr0,2),mg=ad(mg0,3),is=ad(is0,4),
+nx=Math.min(...[fj,dh,asr,mg,is].filter(x=>x>j)),pr=(l,x)=>row(l,tm(x),0,x===nx?'nx':''),
+f20=(roots(x=>sa(x)+18,j0+1,j0+2,144).find(r=>r.up)||{}).t,f2=ad(f20,0),
+nq=[fj,dh,asr,mg,is].map((x,i)=>[x,i]).filter(a=>a[0]>j)[0]||[f2,0];
+$('#s1').innerHTML=`<div class="w hero"><div><div style="color:var(--m);font-size:13px">${tt('الصلاة القادمة')}</div><div class=ph>${tt(['الفجر','الظهر','العصر','المغرب','العشاء'][nq[1]])}</div></div><div class=clk style="font-size:34px;padding:0;margin-inline-start:auto">${E(nq[0]>j?dur(nq[0]-j):'—')}</div></div>`+w('🕌 أوقات الصلوات الخمس',pr('الفجر (18° تحت الأفق)',fj)+row('الشروق',tm(se.rise))+pr('الظهر',dh)+pr('العصر (الجمهور)',asr)+pr('المغرب',mg)+pr('العشاء (المغرب + 90 د)',is));
+if(pro()){const pm=ev(sun,j0-1).set,nS=j<fj0?pm:mg0,nE=j<fj0?fj0:f20,hi=(roots(x=>sa(x)+6,j0,j0+1,144).find(r=>r.up)||{}).t,du=(roots(x=>sa(x)-st.dz,j0,j0+1,144).find(r=>r.up)||{}).t,qy=j<fj0?fj:f2;
+$('#s1').innerHTML+=w('🌙 أوقات أخرى',row('ثلث الليل الأخير (يبدأ)',tm(nS&&nE?nS+(nE-nS)*2/3:0))+row('وقت قيام الليل (قبل الفجر بساعة)',tm(qy&&qy-1/24))+row('الإسفار الأعلى (الشمس 6° تحت الأفق)',tm(hi))+row('بداية وقت الضحى',tm(du)+' ('+st.dz+'°)'))}else LK[1]=1;
+/* الشمس */
+const et=n180(su.L-.0057183-su.ra+su.dpsi*cs(su.eps))*4;
+$('#s2').innerHTML=''+(pro()?ecl(su,row('المسافة (وحدة فلكية)',U(su.r.toFixed(6),'AU'))+row('المسافة (مليون كم)',U((su.km/1e6).toFixed(3),''))+mnr(su.lon,1))+equ(su,hs):(LK[2]=1,''))+hor(hs)+(pro()?shd(hs,se):'')+rst(se)+
+w('☀️ بيانات أخرى',row('مدة النهار',se.rise&&se.set?dur(se.set-se.rise):'—')+row('مدة الليل',se.rise&&se.set?dur(1-(se.set-se.rise)):'—')+row('نصف القطر الظاهري',dms(su.sd))+row('معادلة الزمن',U((et<0?'−':'+')+Math.abs(et).toFixed(2),'دقيقة'),1));
+/* القمر */
+const e3=n360(n180(mo.lon-su.lon)),psi=ac(cs(mo.lat)*cs(mo.lon-su.lon)),ip=dg(at(su.km*sn(psi),mo.km-su.km*cs(psi))),k=(1+cs(ip))/2,
+phn=tt(PH[Math.floor((e3+22.5)/45)%8]),c1=conj(j-e3/12.19),c2=conj(j+(360-e3)/12.19),age=j-c1,
+lag=me.set&&se.set?(me.set-se.set)*1440:0,cf=x=>G.format(dt(x))+' '+tt('الساعة')+' '+N(tm(x,1));
+$('#s3').innerHTML=`<div class="w hero">${msvg(k,e3<180)}<div><div class=ph>${phn}</div>${E(N((k*100).toFixed(1)+'%')+' '+tt('مضاءة'))}</div></div>`
++(pro()?w('🌙 بيانات القمر الخاصة',row('الاستطالة (المطال)',dms(psi))+row('العمر',N(Math.floor(age))+' '+tt('يوم')+' '+N(dur(age%1)),1)+row('نسبة الإضاءة',(k*100).toFixed(2)+'%')+row('الطور',phn,1)+row('زاوية الطور',dms(ip))+row('المكث (فرق الغروب)',lag?U(lag.toFixed(1),'دقيقة'):'—',1)+row('اختلاف المنظر الأفقي',dms(mo.par))+row('نصف القطر الظاهري',dms(mo.sd))):(LK[3]=1,''))+
+w('🌑 الاقتران (المحاق)',row('السابق',cf(c1),1)+row('القادم',cf(c2),1))
++(pro()?ecl(mo,row('المسافة (كم)',U(Math.round(mo.km),''))+mnr(mo.lon,0))+equ(mo,hm):'')+hor(hm)+rst(me);
+if(pro())$('#s4').innerHTML=hil(j,c1,c2,cf);else{LK[4]=1;$('#s4').innerHTML=''}
+if(pro()){$('#s2').innerHTML+=eclS(j,c1,c2)+ingW(j);$('#s3').innerHTML+=eclL(j)+apsW(j)}
+$('#s6').innerHTML=qib(j,j0,hs,cf);
+/* الوقت النجمي */
+if(pro()){const j00=Math.floor(j-.5)+.5,g0=gmst(j00),g1=gmst(j),nn=nut((j-2451545)/36525),q=nn.dpsi*cs(nn.eps),
+s2=g=>row('المتوسط',hms(g/15))+row('الظاهري',hms((g+q)/15));
+$('#s5e').innerHTML=stc(j,j0,hs);
+$('#s5d').innerHTML=w('⭐ الوقت النجمي عند الساعة 0 (غرينتش)',row('بتاريخ UT',G.format(new Date((j00-2440587.5)*864e5)),1)+s2(g0))+w('🌍 الوقت النجمي العالمي (غرينتش)',s2(g1))+w('📍 الوقت النجمي المحلي',s2(g1+st.lon))+w('ℹ️ معادلة الاعتدالين',row('بالثواني',U((q*240).toFixed(3),'ثانية'),1))}else{LK[5]=1;$('#s5d').innerHTML='';$('#s5e').innerHTML=''}
+lkRender();
+}
+/* التحكم */
+const msg=t=>$('#ms').textContent=tt(t),lab=()=>$('#dgt').textContent=st.ar?'123':'١٢٣',
+sync=()=>['lat','lon','tz'].forEach(i=>$('#'+i).value=+st[i].toFixed(5));
+function upd(){const a=num($('#lat').value),o=num($('#lon').value),z=num($('#tz').value);
+if(Math.abs(a)<=90)st.lat=a;if(Math.abs(o)<=180)st.lon=o;if(z>=-12&&z<=14)st.tz=z;
+st.d=$('#dd').value||st.d;st.hh=cl(num($('#hh').value),23);st.mm=cl(num($('#mm').value),59);st.ss=cl(num($('#ss').value),59);save();render()}
+function setMode(a){st.auto=!!a;document.querySelectorAll('#gm button').forEach(b=>b.classList.toggle('on',+b.dataset.v==st.auto));
+['lat','lon','tz'].forEach(i=>$('#'+i).readOnly=st.auto);document.querySelectorAll('.pm').forEach(b=>b.disabled=st.auto);$('#ga').hidden=!st.auto;sync();save();render()}
+function geo(r){msg('جارٍ تحديد الموقع…');const f=()=>{msg('تعذّر تحديد الموقع — فعّل GPS وإذن الموقع للتطبيق أو أدخله يدويًا');setMode(0)};if(!navigator.geolocation)return f();
+try{navigator.geolocation.getCurrentPosition(p=>{st.lat=p.coords.latitude;st.lon=p.coords.longitude;st.tz=-new Date().getTimezoneOffset()/60;msg('تم تحديد الموقع تلقائيًا ✓');sync();save();render()},e=>{if(e.code!=1&&!r)return geo(1);f()},{enableHighAccuracy:!r,timeout:r?20000:10000,maximumAge:60000})}catch(e){f()}}
+function fillManual(){const L=dt(Date.now()/864e5+2440587.5);$('#dd').value=L.toISOString().slice(0,10);$('#hh').value=L.getUTCHours();$('#mm').value=L.getUTCMinutes();$('#ss').value=L.getUTCSeconds();upd()}
+function setT(n){st.now=!!n;document.querySelectorAll('#tmd button').forEach(b=>b.classList.toggle('on',+b.dataset.v==st.now));$('#man').hidden=st.now;if(!st.now&&!st.d)fillManual();else render()}
+const nav=[...document.querySelectorAll('nav button')];
+nav.forEach(b=>b.onclick=()=>{nav.forEach(x=>x.classList.remove('on'));document.querySelectorAll('section').forEach(x=>x.classList.remove('on'));b.classList.add('on');$('#s'+b.dataset.s).classList.add('on');scrollTo(0,0)});
+$('#dgt').onclick=()=>{st.ar=!st.ar;lab();save();render()};
+$('#gm').onclick=e=>{const v=e.target.dataset.v;if(v!=null){setMode(+v);if(+v)geo()}};
+$('#tmd').onclick=e=>{const v=e.target.dataset.v;if(v!=null)setT(+v)};
+$('#ga').onclick=()=>geo();
+document.onclick=e=>{const s=e.target.dataset.s;if(s){const i=$('#'+s);i.value=/^[-−]/.test(i.value)?i.value.slice(1):'-'+i.value;upd()}};
+document.oninput=e=>{if('k' in e.target.dataset)upd()};
+const hui=()=>{document.querySelectorAll('#hm button').forEach(b=>b.classList.toggle('on',b.dataset.m==st.hm));document.querySelectorAll('#hs button').forEach(b=>b.classList.toggle('on',(b.dataset.v=='1')==st.hs));$('#ho').value=(st.ho>0?'+':'')+st.ho;save();render()};
+$('#hm').onclick=e=>{if(e.target.dataset.m){st.hm=e.target.dataset.m;hui()}};
+$('#hs').onclick=e=>{if(e.target.dataset.v!=null){st.hs=e.target.dataset.v=='1';hui()}};
+document.querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>{st.ho=Math.max(-2,Math.min(2,st.ho+ +b.dataset.o));hui()});
+function lng(){const d=document.documentElement;d.lang=st.lg;d.dir=st.lg=='ar'?'rtl':'ltr';mkG();Object.keys(HF).forEach(k=>delete HF[k]);
+const tw=document.createTreeWalker(document.body,4);let n;while(n=tw.nextNode()){if(n.parentNode.tagName=='SCRIPT'||!n.nodeValue.trim())continue;n._a=n._a||n.nodeValue;n.nodeValue=tt(n._a)}
+document.querySelectorAll('[placeholder]').forEach(e=>{e._p=e._p||e.placeholder;e.placeholder=tt(e._p)});
+document.querySelectorAll('#lg button').forEach(b=>b.classList.toggle('on',b.dataset.l==st.lg));$('#dgt').hidden=st.lg!='ar';
+$('#hm').innerHTML=Object.keys(HM).map(k=>`<button data-m=${k}>${tt(HM[k])}</button>`).join('');nfi();tki();stl();licUI();hui()}
+$('#lg').onclick=e=>{const l=e.target.dataset.l;if(l){st.lg=l;lng()}};
+$('#nfo').onclick=e=>{const v=e.target.dataset.v;if(v==null)return;if(v=='1'){if(!('Notification'in window))return nfm('المتصفح لا يدعم الإشعارات');Notification.requestPermission().then(p=>{st.nf.on=p=='granted'?1:0;nfm(st.nf.on?'':'لم يُمنح إذن الإشعارات: فعّله من إعدادات المتصفح للموقع');evK=0;save();nfi();nfk()})}else{st.nf.on=0;save();nfi()}};
+$('#nfc').onclick=e=>{const k=e.target.dataset.k;if(k){st.nf[k]=st.nf[k]?0:1;evK=0;save();nfi()}};
+$('#nfd').onclick=e=>{const c=e.target.dataset.c;if(!c)return;const a=st.ld[c],mx={m:180,h:48,d:30};
+if(e.target.dataset.u){a[1]={m:'h',h:'d',d:'m'}[a[1]];a[0]=Math.min(a[0],mx[a[1]])}else a[0]=Math.max(0,Math.min(mx[a[1]],a[0]+ +e.target.dataset.d*{m:5,h:1,d:1}[a[1]]));evK=0;save();nfi()};
+$('#sts').onchange=()=>{st.sx=+$('#sts').value;save();render()};
+$('#nfx').onclick=icx;
+$('#tkb').onclick=e=>{const i=e.target.dataset.t;if(i!=null){st.tk[i]=Math.max(-30,Math.min(30,st.tk[i]+ +e.target.dataset.d));evK=0;save();tki();render()}};
+document.querySelectorAll('[data-z]').forEach(b=>b.onclick=()=>{st.dz=Math.max(2,Math.min(8,+(st.dz+ +b.dataset.z).toFixed(1)));save();tki();render()});
+$('#licb').onclick=async()=>{licMsg(await lact($('#lick').value))};
+$('#licb2').onclick=()=>{LIC=null;try{localStorage.removeItem('astroLic')}catch(e){}licUI();render()};
+linit();
+lab();lng();setT(1);setMode(st.auto);if(st.auto)geo();setTimeout(nfk,3000);
+if('serviceWorker' in navigator&&/^https?:/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(()=>{});
+setInterval(()=>{if(st.now)render()},1000);setInterval(nfk,20000);
+</script>
+</body>
+</html>
